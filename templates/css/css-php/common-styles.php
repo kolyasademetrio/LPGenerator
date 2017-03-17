@@ -1,4 +1,9 @@
-/*common styles*/
+<?php
+
+$title = '';
+
+
+$styles = '/*common styles*/
 ul, li {
 	margin: 0;
 	padding: 0;
@@ -24,7 +29,13 @@ h1, h2, h3, h4, h5, h6, p {
 
 @media (max-width: 479px) {
 
-}/*main styles*/
+}' .
+
+$title
+
+.
+
+'/*main styles*/
 
 /* прижать футер к низу */
 html,
@@ -69,4 +80,8 @@ body {
 
 .container {
 	max-width: 1030px;
-}
+}';
+
+return $styles;
+
+?>

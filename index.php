@@ -6,6 +6,8 @@ include 'header.php';
 
 includeFile('templates/html');
 
+generateStylesheets();
+
 ?>
 
 
