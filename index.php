@@ -4,9 +4,10 @@ include 'header.php';
 
 <?php
 
+
 includeFile('templates/html');
 
-generateStylesheets();
+
 
 ?>
 

@@ -3,6 +3,11 @@
 define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
 
+
+/*
+* Выводит содержимое всех файлов из папки $dirName
+*
+*/
 function includeFile( $dirName ) {
 
 	$files = scandir( $dirName );
@@ -23,7 +28,10 @@ function includeFile( $dirName ) {
 
 }
 
-
+/*
+* Выводит теги <link rel="stylesheet" href=""></link>
+* с ссылкой на все файлы из директории $dirName
+*/
 function loadStylesheets( $dirName ) {
 
 	$files = scandir( $dirName );
@@ -42,18 +50,20 @@ function loadStylesheets( $dirName ) {
 
 }
 
-function after ($after, $string){
-       
-    if (!is_bool(strpos($string, $after)))
-    return substr($string, strpos($string,$after)+strlen($after));
 
-}
-
-function getExtension( $filename ) {
-    $path_info = pathinfo($filename);
+/*
+* Возвращает расширение файла
+*/
+function getExtension( $filePathName ) {
+    $path_info = pathinfo($filePathName);
     return $path_info['extension'];
 }
 
+
+/*
+* Получает массив всех файлов в директории.
+* Удаляет из массива точки
+*/
 function cleanDots_scandir ($dirPath) {
 	$arrFiles = scandir( $dirPath );
 	$cleanArrFiles = array_diff($arrFiles, array('.', '..'));
@@ -61,15 +71,19 @@ function cleanDots_scandir ($dirPath) {
 	return $cleanArrFiles;
 }
 
-function generateStylesheets(  ) {
 
-	$dirCSSphpPath = 'templates/css/css-php';
+/*
+* Открывает файлы php в папке 'templates/css/css-php' берёт то что они возвращают
+* и создаёт файлы css с такими же именами.
+* Если файл есть - перезаписывает содержимое.
+* Если файла нет - создает и записывает содержимое.
+*/
+function generateStylesheets($outputDir, $inputDir) {
 
-	$dirCSSadminPath = 'templates/css/css-admin';
+	$dirCSSphpPath = $outputDir;
+	$dirCSSadminPath = $inputDir;
 
 	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
-
-	
 
 	foreach($filesCSSphpArray as $filesCSSphpName) {
 
@@ -84,22 +98,16 @@ function generateStylesheets(  ) {
 
 			$fileCSSadminPath = $dirCSSadminPath . '/' . $name . '.' . FILEEXTENSION_CSS;
 
-			// $dirCSSadminPath
-
 			$handle = fopen($fileCSSadminPath , 'w');
 			fwrite($handle, $fileCSScontent);
 			fclose($handle);
 
-			// echo '<p style="padding:15px;border: 2px solid #30bced;margin:15px 15px;">' . $fileCSScontent . '</p>';
-
-		} else {
-			echo '<h1 style="padding:15px;border: 2px solid #30bced;margin:15px 15px;">Выводим расширения файтов которые не являются файлами PHP: ' . $fileExtension . '</h1>';
 		}
 	}
 
 }
 
-
+generateStylesheets('templates/css/css-php', 'templates/css/css-admin');
 
 
 ?>
