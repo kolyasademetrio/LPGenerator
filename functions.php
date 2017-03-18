@@ -84,6 +84,7 @@ function generateStylesheets($outputDir, $inputDir) {
 	$dirCSSadminPath = $inputDir;
 
 	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
+	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
 
 	foreach($filesCSSphpArray as $filesCSSphpName) {
 
@@ -93,7 +94,8 @@ function generateStylesheets($outputDir, $inputDir) {
 
 		$name = substr($filesCSSphpName, 0, strpos($filesCSSphpName, '.' . $fileExtension));
 
-		if ( file_exists($fileCSSphpPath) && $fileExtension === FILEEXTENSION_PHP ) {//end($fileExtensionArr) === 'php'
+		if ( is_file($fileCSSphpPath) && $fileExtension === FILEEXTENSION_PHP ) {
+
 			$fileCSScontent = include $fileCSSphpPath;
 
 			$fileCSSadminPath = $dirCSSadminPath . '/' . $name . '.' . FILEEXTENSION_CSS;
@@ -102,8 +104,29 @@ function generateStylesheets($outputDir, $inputDir) {
 			fwrite($handle, $fileCSScontent);
 			fclose($handle);
 
+		} else if ( is_file($fileCSSphpPath) ) {
+			unlink($fileCSSphpPath);
+		} else if ( is_dir($fileCSSphpPath) ) {
+			array_map('unlink', glob("$fileCSSphpPath/*.*"));
+			rmdir($fileCSSphpPath);
 		}
+
 	}
+
+	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
+	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
+
+	// $array_diff = array_diff($filesCSSadminArray, $filesCSSphpArray);
+
+	echo '<pre><p>Сгенерированные CSS-файлы</p>';
+	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
+	var_dump($filesCSSadminArray);
+	echo '</pre>';
+
+	echo '<pre><p>Исходные CSS-файлы .php</p>';
+	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
+	var_dump($filesCSSphpArray);
+	echo '</pre>';
 
 }
 
