@@ -2,6 +2,7 @@
 
 define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
+define('FILEEXTENSION_HTML', 'html');
 
 
 /*
@@ -10,16 +11,22 @@ define('FILEEXTENSION_CSS', 'css');
 */
 function includeFile( $dirName ) {
 
-	$files = scandir( $dirName );
+	$files = cleanDots_scandir($dirName);
 
-	$files = array_diff($files, array('.', '..'));
+	$i = 1;
 
 	foreach ($files as $fileName) {
 
 		$filePath = $dirName . '/' . $fileName;
 
 		if ( file_exists($filePath) ) {
-			include $filePath;
+
+			echo '<form name="block_edit_' . $i . '" method="get" action="index.php">';
+				include $filePath;
+			echo '<input type="text" name="blockTitle_' . $i . '"><input type="submit" value="Изменить блок"></form>';
+
+			$i++;
+			
 		}
 		
 	}
@@ -73,64 +80,60 @@ function cleanDots_scandir ($dirPath) {
 
 
 /*
-* Открывает файлы php в папке 'templates/css/css-php' берёт то что они возвращают
+* Открывает исходные файлы в папке $sourceDir берёт то что они возвращают
 * и создаёт файлы css с такими же именами.
 * Если файл есть - перезаписывает содержимое.
 * Если файла нет - создает и записывает содержимое.
 */
-function generateStylesheets($outputDir, $inputDir) {
+function generateStylesheets($sourceDir, $outputDir, $sourceFileExtension, $outputFileExtension) {
 
-	$dirCSSphpPath = $outputDir;
-	$dirCSSadminPath = $inputDir;
+	$filesSourceArray = cleanDots_scandir( $sourceDir );
+	$filesOutputArray = cleanDots_scandir( $outputDir );
 
-	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
-	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
+	foreach($filesSourceArray as $fileName) {
 
-	foreach($filesCSSphpArray as $filesCSSphpName) {
+		$filePath = $sourceDir . '/' . $fileName;
 
-		$fileCSSphpPath = $dirCSSphpPath . '/' . $filesCSSphpName;
+		$fileExtension = getExtension($filePath);
 
-		$fileExtension = getExtension($fileCSSphpPath);
+		$name = substr($fileName, 0, strpos($fileName, '.' . $fileExtension));
 
-		$name = substr($filesCSSphpName, 0, strpos($filesCSSphpName, '.' . $fileExtension));
+		if ( is_file($filePath) && $fileExtension === $sourceFileExtension ) { // вынести расширение в параметры
 
-		if ( is_file($fileCSSphpPath) && $fileExtension === FILEEXTENSION_PHP ) {
+			$fileСontent = include $filePath;
 
-			$fileCSScontent = include $fileCSSphpPath;
+			$fileOutputPath = $outputDir . '/' . $name . '.' . $outputFileExtension; // вынести расширение в параметры
 
-			$fileCSSadminPath = $dirCSSadminPath . '/' . $name . '.' . FILEEXTENSION_CSS;
-
-			$handle = fopen($fileCSSadminPath , 'w');
-			fwrite($handle, $fileCSScontent);
+			$handle = fopen($fileOutputPath , 'w');
+			fwrite($handle, $fileСontent);
 			fclose($handle);
 
-		} else if ( is_file($fileCSSphpPath) ) {
-			unlink($fileCSSphpPath);
-		} else if ( is_dir($fileCSSphpPath) ) {
-			array_map('unlink', glob("$fileCSSphpPath/*.*"));
-			rmdir($fileCSSphpPath);
+		} else if ( is_file($filePath) ) {
+			unlink($filePath);
+		} else if ( is_dir($filePath) ) {
+			array_map('unlink', glob("$filePath/*.*"));
+			rmdir($filePath);
 		}
 
 	}
 
-	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
-	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
+	$filesSourceArray = cleanDots_scandir( $sourceDir );// массив исходных файлов стилей(без точек)
 
-	// $array_diff = array_diff($filesCSSadminArray, $filesCSSphpArray);
+	$filesSourceArray = str_replace($sourceFileExtension, $outputFileExtension, $filesSourceArray);// массив исходных с заменой расширения php на css для сравнения с массивом сгенерированных файлов css
 
-	echo '<pre><p>Сгенерированные CSS-файлы</p>';
-	$filesCSSadminArray = cleanDots_scandir( $dirCSSadminPath );
-	var_dump($filesCSSadminArray);
-	echo '</pre>';
+	$filesOutputArray = cleanDots_scandir( $outputDir );// массив сгерерированных файлов стилей
 
-	echo '<pre><p>Исходные CSS-файлы .php</p>';
-	$filesCSSphpArray = cleanDots_scandir( $dirCSSphpPath );
-	var_dump($filesCSSphpArray);
-	echo '</pre>';
+	$array_diff = array_diff($filesOutputArray, $filesSourceArray);// разница массивов
+
+	foreach ($array_diff as $fileToDelete) {
+		$fileToDeletePath = $outputDir . '/' . $fileToDelete;
+		unlink($fileToDeletePath);
+	}
 
 }
 
-generateStylesheets('templates/css/css-php', 'templates/css/css-admin');
+generateStylesheets('templates/css/css-source', 'templates/css/css-output', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+generateStylesheets('templates/html/html-source', 'templates/html/html-output', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 
 
-?>
+

@@ -1,7 +1,6 @@
 <?php
 include_once 'functions.php';
 ?>
-<form method="post" name="form">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +21,7 @@ include_once 'functions.php';
     <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
 
     <?php
-        loadStylesheets('templates/css/css-admin');
+        loadStylesheets('templates/css/css-output');
     ?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
