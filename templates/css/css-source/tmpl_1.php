@@ -1,17 +1,18 @@
 <?php
 $db = new Database();
 
-$section_padding = $db->getVal('section_padding99', 1, 43.2);
+$section_padding = $db->getVal('section_padding', 1, 47);
+$section_name = $db->getVal('section_name', 1, 'section_name');
 
 // echo $section_padding
 
-$styles = '/* ------------------------>>> partners <<<----------------------------------------------------- */
-.partners {
+$styles = '/* ------------------------>>> ' . $section_name . ' <<<----------------------------------------------------- */
+.' . $section_name . ' {
 	padding: '.$section_padding.'px 0 '.$section_padding.'px;
 	background-color: #fff;
 }
 
-.partners__title {
+.' . $section_name . '__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
@@ -22,48 +23,48 @@ $styles = '/* ------------------------>>> partners <<<--------------------------
 	margin: 0 0 55px;
 }
 
-.partners__container {
+.' . $section_name . '__container {
 	max-width: 1006px;
 }
 
-.partners__container,
-.partners__innerItem {
+.' . $section_name . '__container,
+.' . $section_name . '__innerItem {
 	padding-left: 3px;
 	padding-right: 3px;
 }
 
-.partners__row {
+.' . $section_name . '__row {
 	margin-left: -3px;
 	margin-right: -3px;
 }
 
-.partners__innerItem {
+.' . $section_name . '__innerItem {
 	margin-bottom: 6px;
 }
 
-.partners__item {
+.' . $section_name . '__item {
 	background-color: #e0e0e0;
 	height: 56px;
 	line-height: 56px;
 }
 
-.partners__img {
+.' . $section_name . '__img {
 	display: inline-block;
 	vertical-align: middle;
 }
 
 @media ( max-width: 768px ) {
 
-	.partners__container {
+	.' . $section_name . '__container {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
 
-	.partners {
+	.' . $section_name . ' {
 		padding: 30px 0 30px;
 	}
 
-	.partners__title {
+	.' . $section_name . '__title {
 		margin-bottom: 30px;
 		font-size: 20px;
 	}
@@ -71,7 +72,7 @@ $styles = '/* ------------------------>>> partners <<<--------------------------
 }
 
 
-/* ------------------------>>> partners End <<<------------------------------------------------- */';
+/* ------------------------>>> ' . $section_name . ' End <<<------------------------------------------------- */';
 
 return $styles;
 

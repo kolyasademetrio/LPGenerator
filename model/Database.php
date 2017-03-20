@@ -34,7 +34,7 @@ class Database
     public function getVal($valName, $id, $default)
     {
         $result = mysqli_query($this->db, "SELECT $valName FROM sections WHERE id=$id");
-       if ($row = @mysqli_fetch_assoc($result)) {
+        if ($row = mysqli_fetch_assoc($result)) {
 			return $row[$valName];
 		} else {
 			return $default;

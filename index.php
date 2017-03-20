@@ -6,7 +6,7 @@ includeFile('templates/html/html-output');
 
 $db = new Database();
 
-$db->getVal('section_padding', 1);
+$db->getVal('section_padding', 1, 10);
 
 
 ?>
