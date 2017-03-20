@@ -6,7 +6,7 @@ if (isset($_GET['blockTitle'])) {
     $blockTitle = 'С нами сотрудничают';
 }
 
-echo $_GET['blockTitle'];
+echo $blockTitle;
 
 $html = '<!-- partners -->
 <div class="partners">

@@ -1,9 +1,13 @@
 <?php
+$db = new Database();
 
+$section_padding = $db->getVal('section_padding99', 1, 43.2);
+
+// echo $section_padding
 
 $styles = '/* ------------------------>>> partners <<<----------------------------------------------------- */
 .partners {
-	padding: 55px 0 54px;
+	padding: '.$section_padding.'px 0 '.$section_padding.'px;
 	background-color: #fff;
 }
 

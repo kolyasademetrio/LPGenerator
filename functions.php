@@ -4,6 +4,11 @@ define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
 define('FILEEXTENSION_HTML', 'html');
 
+function __autoload( $className ) {
+	$className = str_replace('..', '', $className);
+	require_once "model/$className.php";
+}
+
 
 /*
 * Выводит содержимое всех файлов из папки $dirName

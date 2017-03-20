@@ -1,5 +1,6 @@
 <?php
 include_once 'functions.php';
+// include_once 'model/Database.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,9 +21,7 @@ include_once 'functions.php';
     <!-- custom css -->
     <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
 
-    <?php
-        loadStylesheets('templates/css/css-output');
-    ?>
+    <?php loadStylesheets('templates/css/css-output'); ?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

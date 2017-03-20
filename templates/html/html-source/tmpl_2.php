@@ -1,6 +1,6 @@
 <?php
 
-echo $_GET['blockTitle'];
+// echo $_GET['blockTitle'];
 
 $html = '<!-- services -->
 <div class="services">
