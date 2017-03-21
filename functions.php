@@ -28,6 +28,11 @@ function includeFile( $dirName ) {
 
 			echo '<form name="block_edit_' . $i . '" method="get" action="index.php">';
 				include $filePath;
+
+				for ($i=0; $i < 3; $i++) { 
+					echo '<input type="text" name="blockTitle_' . $i . '">';
+				}
+
 			echo '<input type="text" name="blockTitle_' . $i . '"><input type="submit" value="Изменить блок"></form>';
 
 			$i++;
@@ -90,7 +95,7 @@ function cleanDots_scandir ($dirPath) {
 * Если файл есть - перезаписывает содержимое.
 * Если файла нет - создает и записывает содержимое.
 */
-function generateStylesheets($sourceDir, $outputDir, $sourceFileExtension, $outputFileExtension) {
+function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outputFileExtension) {
 
 	$filesSourceArray = cleanDots_scandir( $sourceDir );
 	$filesOutputArray = cleanDots_scandir( $outputDir );
@@ -137,8 +142,8 @@ function generateStylesheets($sourceDir, $outputDir, $sourceFileExtension, $outp
 
 }
 
-generateStylesheets('templates/css/css-source', 'templates/css/css-output', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
-generateStylesheets('templates/html/html-source', 'templates/html/html-output', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
+generateOutputFiles('templates/css/css-source', 'templates/css/css-output', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+generateOutputFiles('templates/html/html-source', 'templates/html/html-output', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 
 
 
