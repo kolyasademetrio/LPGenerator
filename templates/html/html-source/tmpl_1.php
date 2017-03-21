@@ -1,8 +1,17 @@
 <?php
+include_once ROOT . '/functions.php';
+
 $db = new Database();
 
-$title = $db->getVal('title', 1, 'Section title');
-$section_name = $db->getVal('section_name', 1, 'section_1');
+$tmpl_id = 1;
+
+$title        = $db->getVal('title', $tmpl_id, 'Section title');
+$section_name = $db->getVal('section_name', $tmpl_id, 'section_1');
+
+
+
+createArray($tmpl_id, 'title', 'section_name');
+
 
 $html = '<!-- ' . $section_name . ' -->
 <div class="' . $section_name . '">

@@ -1,5 +1,6 @@
 <?php
 
+define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
 define('FILEEXTENSION_HTML', 'html');
@@ -10,40 +11,15 @@ function __autoload( $className ) {
 }
 
 
-/*
-* Выводит содержимое всех файлов из папки $dirName
-*
-*/
-function includeFile( $dirName ) {
 
-	$files = cleanDots_scandir($dirName);
 
-	$i = 1;
 
-	foreach ($files as $fileName) {
 
-		$filePath = $dirName . '/' . $fileName;
 
-		if ( file_exists($filePath) ) {
 
-			echo '<form name="block_edit_' . $i . '" method="get" action="index.php">';
-				include $filePath;
 
-				for ($i=0; $i < 3; $i++) { 
-					echo '<input type="text" name="blockTitle_' . $i . '">';
-				}
 
-			echo '<input type="text" name="blockTitle_' . $i . '"><input type="submit" value="Изменить блок"></form>';
 
-			$i++;
-			
-		}
-		
-	}
-
-	clearstatcache();
-
-}
 
 /*
 * Выводит теги <link rel="stylesheet" href=""></link>
@@ -88,6 +64,8 @@ function cleanDots_scandir ($dirPath) {
 	return $cleanArrFiles;
 }
 
+// $phpContent = file_get_contents('templates/html/html-source/tmpl_1.php');
+
 
 /*
 * Открывает исходные файлы в папке $sourceDir берёт то что они возвращают
@@ -102,7 +80,7 @@ function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outp
 
 	foreach($filesSourceArray as $fileName) {
 
-		$filePath = $sourceDir . '/' . $fileName;
+		$filePath = ROOT . '/' . $sourceDir . '/' . $fileName;
 
 		$fileExtension = getExtension($filePath);
 
@@ -144,6 +122,105 @@ function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outp
 
 generateOutputFiles('templates/css/css-source', 'templates/css/css-output', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
 generateOutputFiles('templates/html/html-source', 'templates/html/html-output', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
+
+// echo '<pre>';
+// var_dump($tmpl_1);
+// echo '</pre>';
+// echo '</br>';
+// echo '<pre>';
+// var_dump($tmpl_2);
+// echo '</pre>';
+
+/*
+* Выводит содержимое всех файлов из папки $dirName
+*
+*/
+function includeFile( $dirName ) {
+
+	// global $tmpl_1;
+	// global $tmpl_2;
+
+	// echo '<pre>';
+	// var_dump($tmpl_1);
+	// echo '</pre>';
+	// echo '</br>';
+	// echo '<pre>';
+	// var_dump($tmpl_2);
+	// echo '</pre>';
+
+	$files = cleanDots_scandir($dirName);
+
+	$id = 1;// $id строки таблицы sections
+
+	foreach ($files as $fileName) {
+
+		$globalArr = 'tmpl_' . $id;
+
+		global ${$globalArr};
+
+		$filePath = ROOT . '/' . $dirName . '/' . $fileName;
+
+		if ( file_exists($filePath) ) {
+
+			echo '<form name="block_edit_' . $id . '" method="get" action="index.php">';
+				include $filePath;// вывод скомпилированного .html
+
+				echo '<div class="input__wraper">';
+				$i = 0;
+				foreach (${$globalArr} as $key => $value) {
+
+					if ($i > 0) {
+						echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+					}
+
+					$i++;
+					
+				}
+
+			echo '<input type="submit" value="Изменить блок" name="' . ${$globalArr}['id'] . '">';
+			echo '</div></form>';
+
+			$id++;
+			
+		}
+		
+	}
+
+	clearstatcache();
+
+}
+
+function createArray() {
+
+	$args = func_get_args();
+
+	$id = $args[0];
+
+	$arrayName = 'tmpl_' . $id;
+
+	global ${$arrayName};
+
+	$i = 0;
+
+	foreach ($args as $value) {
+		if ($i > 0) {
+			${$arrayName}['$' . $value] = $value;
+		} else {
+			${$arrayName}['id'] = $value;
+		}
+
+		$i++;
+	}
+
+	
+	
+}
+
+
+
+
+
+
 
 
 

@@ -35,9 +35,10 @@ class Database
     {
         $result = mysqli_query($this->db, "SELECT $valName FROM sections WHERE id=$id");
         if ($row = mysqli_fetch_assoc($result)) {
-			return $row[$valName];
-		} else {
-			return $default;
-		}
+            return $row[$valName];
+        } else {
+            return $default;
+        }
     }
+
 }
