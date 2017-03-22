@@ -1,7 +1,8 @@
 /* ------------------------>>> partners <<<----------------------------------------------------- */
 .partners {
-	padding: 54px 0 54px;
+	padding: 41px 0 54px;
 	background-color: #fff;
+	border-bottom:3px solid #30bced;
 }
 
 .partners__title {

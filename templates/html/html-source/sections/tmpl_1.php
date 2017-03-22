@@ -5,8 +5,8 @@ $db = new Database();
 
 $tmpl_id = 1;
 
-$title        = $db->getVal('title', $tmpl_id, 'Section title');
-$section_name = $db->getVal('section_name', $tmpl_id, 'section_1');
+$title        = $db->getVal('title', $tmpl_id, 'Section title', 'html_content');
+$section_name = $db->getVal('section_name', $tmpl_id, 'section_1', 'html_content');
 
 
 

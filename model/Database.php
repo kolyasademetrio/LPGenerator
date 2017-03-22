@@ -31,9 +31,9 @@ class Database
         return $result;
     }
 
-    public function getVal($valName, $id, $default)
+    public function getVal($valName, $id, $default, $tableName)
     {
-        $result = mysqli_query($this->db, "SELECT $valName FROM sections WHERE id=$id");
+        $result = mysqli_query($this->db, "SELECT $valName FROM $tableName WHERE id=$id");
         if ($row = mysqli_fetch_assoc($result)) {
             return $row[$valName];
         } else {

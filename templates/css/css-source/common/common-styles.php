@@ -1,4 +1,17 @@
-/*common styles*/
+<?php
+
+include_once ROOT . '/functions.php';
+
+$db = new Database();
+
+$tmpl_id = 0;
+
+$container_max_width = $db->getVal('container_max_width', $tmpl_id, 1030, 'css_content_common');
+
+createArray($tmpl_id, 'container_max_width');
+
+
+$styles = '/*common styles*/
 ul, li {
 	margin: 0;
 	padding: 0;
@@ -24,7 +37,9 @@ h1, h2, h3, h4, h5, h6, p {
 
 @media (max-width: 479px) {
 
-}/*main styles*/
+}
+
+/*main styles*/
 
 /* прижать футер к низу */
 html,
@@ -68,5 +83,9 @@ body {
 }
 
 .container {
-	max-width: 1030px;
-}
+	max-width: ' . $container_max_width . 'px;
+}';
+
+return $styles;
+
+?>

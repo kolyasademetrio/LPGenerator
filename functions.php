@@ -12,15 +12,6 @@ function __autoload( $className ) {
 
 
 
-
-
-
-
-
-
-
-
-
 /*
 * Выводит теги <link rel="stylesheet" href=""></link>
 * с ссылкой на все файлы из директории $dirName
@@ -82,6 +73,12 @@ function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outp
 
 		$filePath = ROOT . '/' . $sourceDir . '/' . $fileName;
 
+		if ( is_dir($filePath) ) {
+			array_map('unlink', glob("$filePath/*.*"));
+			rmdir($filePath);
+			continue;
+		}
+
 		$fileExtension = getExtension($filePath);
 
 		$name = substr($fileName, 0, strpos($fileName, '.' . $fileExtension));
@@ -96,12 +93,12 @@ function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outp
 			fwrite($handle, $fileСontent);
 			fclose($handle);
 
-		} else if ( is_file($filePath) ) {
+		 } else if ( is_file($filePath) ) {
 			unlink($filePath);
-		} else if ( is_dir($filePath) ) {
-			array_map('unlink', glob("$filePath/*.*"));
-			rmdir($filePath);
-		}
+		 } //else if ( is_dir($filePath) ) {
+		// 	array_map('unlink', glob("$filePath/*.*"));
+		// 	rmdir($filePath);
+		// }
 
 	}
 
@@ -120,8 +117,11 @@ function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outp
 
 }
 
-generateOutputFiles('templates/css/css-source', 'templates/css/css-output', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
-generateOutputFiles('templates/html/html-source', 'templates/html/html-output', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
+generateOutputFiles('templates/css/css-source/sections', 'templates/css/css-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+generateOutputFiles('templates/css/css-source/common', 'templates/css/css-output/common', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+
+generateOutputFiles('templates/html/html-source/sections', 'templates/html/html-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
+generateOutputFiles('templates/html/html-source/common', 'templates/html/html-output/common', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 
 // echo '<pre>';
 // var_dump($tmpl_1);

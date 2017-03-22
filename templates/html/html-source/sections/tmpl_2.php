@@ -2,22 +2,18 @@
 
 include_once ROOT . '/functions.php';
 
-
-
 $db = new Database();
 
 $tmpl_id = 2;
 
-$title        = $db->getVal('title', $tmpl_id, 'Section title');
-$section_name = $db->getVal('section_name', $tmpl_id, 'section_1');
-$border_width = $db->getVal('border_width', $tmpl_id, 10);
-
+$title        = $db->getVal('title', $tmpl_id, 'Section title', 'html_content');
+$section_name = $db->getVal('section_name', $tmpl_id, 'section_1', 'html_content');
 
 
 createArray($tmpl_id, 'title', 'section_name', 'border_width');
 
 $html = '<!-- ' . $section_name . ' -->
-<div class="' . $section_name . '" style="border-top:' . $border_width . 'px solid #369;">
+<div class="' . $section_name . '">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">

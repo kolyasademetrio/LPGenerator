@@ -5,15 +5,19 @@ include 'header.php';
 // var_dump($tmpl_1);
 // echo '</pre>';
 
-includeFile('templates/html/html-output');
-
-$db = new Database();
-
-$db->getVal('section_padding', 1, 10);
+includeFile('templates/html/html-output/sections');
 
 
 // echo '<pre>';
+// var_dump($tmpl_0);
+// echo '</pre>';
+// echo '<hr>';
+// echo '<pre>';
 // var_dump($tmpl_1);
+// echo '</pre>';
+// echo '<hr>';
+// echo '<pre>';
+// var_dump($tmpl_2);
 // echo '</pre>';
 ?>
 
