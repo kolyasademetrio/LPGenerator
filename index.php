@@ -21,9 +21,7 @@ includeFile('templates/html/html-output/sections');
 // echo '</pre>';
 ?>
 
-<pre>
 
-</pre>
 
 <?
 include 'footer.php'; ?>
