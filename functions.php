@@ -162,7 +162,7 @@ function includeFile( $dirName ) {
 
 		if ( file_exists($filePath) ) {
 
-			echo '<form name="block_edit_' . $id . '" method="get" action="index.php">';
+			echo '<form name="block_edit_' . $id . '" method="post" action="handler.php">';
 				include $filePath;// вывод скомпилированного .html
 
 				echo '<div class="input__wraper">';
@@ -177,7 +177,7 @@ function includeFile( $dirName ) {
 					
 				}
 
-			echo '<input type="submit" value="Изменить блок" name="' . ${$globalArr}['id'] . '">';
+			echo '<input name="id" hidden="hidden" value="' . ${$globalArr}['id'] . '"><input type="submit" value="Изменить блок" name="submit">';
 			echo '</div></form>';
 
 			$id++;
