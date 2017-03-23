@@ -41,4 +41,34 @@ class Database
         }
     }
 
+    // 'UPDATE mytable SET column1 = value1, column2 = value2 WHERE key_value = some_value'
+
+    // public function updateValuesOfTable($POSTarr)
+    // {
+    // 	foreach ($POSTarr as $key => $value) {
+    // 		mysqli_query($this->db, "UPDATE mytable SET column1 = value1, column2 = value2 WHERE key_value = some_value");
+    // 	}
+    // }
+    
+    public function getNumRow($POSTarr, $id) {
+
+    	foreach ($POSTarr as $key => $value) {
+
+    		echo '$key - ' . $key . '<br>';
+
+    		$result = mysqli_query($this->db, "SELECT * FROM html_content");
+
+    		 if ($row = mysqli_fetch_assoc($result)) {
+            echo $row['title'];
+        } else {
+            return $default;
+        }
+    		
+    	}
+
+  //   	$query = "SELECT * FROM products ORDER BY price DESC LIMIT 3";
+		// $data = mysql_gettable($query);
+		// print_r($data);
+    } 
+
 }
