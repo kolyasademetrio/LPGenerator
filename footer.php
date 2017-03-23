@@ -11,7 +11,5 @@
     <!-- initializations -->
     <script type="text/javascript" src="assets/js/init.js"></script>
 
-    <script src="assets/admin/admin-script.js"></script>
-
 </body>
 </html>

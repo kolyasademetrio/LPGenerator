@@ -162,27 +162,23 @@ function includeFile( $dirName ) {
 
 		if ( file_exists($filePath) ) {
 
-			include $filePath;// вывод скомпилированного .html
+			echo '<form name="block_edit_' . $id . '" method="post" action="handler.php">';
+				include $filePath;// вывод скомпилированного .html
 
-			echo '<div class="input__wraper container" style="padding:15px 5px;">
-					<div class="row" style="margin:0 -5px;">
-						<form name="block_edit_' . $id . '" method="get" action="index.php">';
-				
-
-				echo '';
+				echo '<div class="input__wraper">';
 				$i = 0;
 				foreach (${$globalArr} as $key => $value) {
 
 					if ($i > 0) {
-						echo '<div style="padding:0 5px;" class="col-md-2"><input style="width:100%;" type="text" name="' . $value . '" placeholder="' . $value . '"></div>';
+						echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 					}
 
 					$i++;
 					
 				}
 
-			echo '<div style="padding:15px 5px;" class="col-xs-12 text-center"><input type="submit" value="Изменить блок" name="' . ${$globalArr}['id'] . '"></div></div>';
-			echo '</form></div>';
+			echo '<input name="id" hidden="hidden" value="' . ${$globalArr}['id'] . '"><input type="submit" value="Изменить блок" name="submit">';
+			echo '</div></form>';
 
 			$id++;
 			
