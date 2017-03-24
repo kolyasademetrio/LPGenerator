@@ -43,36 +43,53 @@ class Database
         }
     }
 
-    // 'UPDATE mytable SET column1 = value1, column2 = value2 WHERE key_value = some_value'
 
-    // public function updateValuesOfTable($POSTarr)
-    // {
-    // 	foreach ($POSTarr as $key => $value) {
-    // 		mysqli_query($this->db, "UPDATE mytable SET column1 = value1, column2 = value2 WHERE key_value = some_value");
-    // 	}
-    // }
+
+
+
+    /*
+    * получаем массив из имен всех таблиц в нашей базе данных
+    *
+    */
+    private function get_all_tablename_DB_arr()
+    {
+        $res = $this->db->query('SHOW TABLES');
+
+        return array_column( mysqli_fetch_all($res), 0 );
+    }
+
+
     
     public function getNumRow($POSTarr, $id) {
 
-        $tablesList = array_column( mysqli_fetch_all($this->db->query('SHOW TABLES')), 0 );
+        // получаем массив $tablesList из именамин всех таблиц в нашей базе данных
+        $tables_list_arr = $this->get_all_tablename_DB_arr();
 
-        // $tablesList = $this->db->query("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA LIKE 'lpgenerator'");
+    	foreach ($tables_list_arr as $table_name) {
 
-        var_dump($tablesList);
+            // echo 'START of the table: ' . $table_name . '<br>';
 
-        die;
+            foreach ($POSTarr as $key => $value) {
 
-    	foreach ($POSTarr as $key => $value) {
+               if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=$id")) {
 
-    		if ($stmt = $this->db->prepare("SELECT $key FROM css_content WHERE id=$id")) {
+                    $stmt->execute();
+                    $stmt->store_result();
+                    if ( $stmt->num_rows() ) {
 
-                $stmt->execute();
-                $stmt->store_result();
-                $num_rows = $stmt->num_rows();
+                        $st = $this->db->prepare("UPDATE $table_name SET $key=? WHERE id=$id");
 
-                echo $num_rows . '<br>';
-                // exit;
+                        $st->bind_param('s', $value);
+
+                        $st->execute();
+
+                    }
+                
+                }
+
             }
+
+            // echo 'END of the table: ' . $table_name . '<br><hr>';
 
     	}
 

@@ -17,7 +17,7 @@ createArray($tmpl_id, 'section_name', 'section_padding_top', 'section_padding_bo
 
 $styles = '/* ------------------------>>> ' . $section_name . ' <<<----------------------------------------------------- */
 .' . $section_name . ' {
-	padding: ' . $section_padding_top . ' 0 ' . $section_padding_bottom . ';
+	padding: ' . $section_padding_top . 'px 0 ' . $section_padding_bottom . 'px;
 	background: #fff url(../img/' . $section_name . '/bg/bg_' . $section_name . '.jpg) center 0 no-repeat;
 	background-size: cover;
 	border-bottom: ' . $border_width . 'px solid #369;
