@@ -35,7 +35,18 @@ class Database
 
     public function getVal($valName, $id, $default, $tableName)
     {
-        $result = mysqli_query($this->db, "SELECT $valName FROM $tableName WHERE id=$id");
+
+        // $stmt = $this->db->prepare("SELECT ? FROM ? WHERE id=?");
+        // $stmt->bind_param('s', $valName, $tableName, $id);
+        // $stmt->execute();
+        // echo !$stmt->bind_result($val_name);
+
+        // while ($stmt->fetch()) {
+        //     echo $val_name;
+        // }
+
+
+        $result = mysqli_query($this->db, "SELECT $valName FROM $tableName WHERE id='$id'");
         if ($row = mysqli_fetch_assoc($result)) {
             return $row[$valName];
         } else {

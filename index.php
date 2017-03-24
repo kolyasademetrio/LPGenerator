@@ -8,9 +8,12 @@ include 'header.php';
 includeFile('templates/html/html-output/sections');
 
 
-// echo '<pre>';
-// var_dump($tmpl_0);
-// echo '</pre>';
+
+
+echo '<pre>';
+var_dump($tmpl_common);
+echo '</pre>';
+die;
 // echo '<hr>';
 // echo '<pre>';
 // var_dump($tmpl_1);

@@ -86,7 +86,7 @@ function cleanDots_scandir ($dirPath) {
 	return $cleanArrFiles;
 }
 
-// $phpContent = file_get_contents('templates/html/html-source/tmpl_1.php');
+
 
 
 /*
@@ -199,10 +199,11 @@ function includeFile( $dirName ) {
 		}
 		
 	}
-
 	clearstatcache();
-
 }
+
+
+
 
 function createArray() {
 
@@ -225,8 +226,6 @@ function createArray() {
 
 		$i++;
 	}
-
-	
 	
 }
 
