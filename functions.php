@@ -11,6 +11,37 @@ function __autoload( $className ) {
 }
 
 
+// array_column — Возвращает массив из значений одного столбца входного массива
+// добавляем свою функцию array_column так как испоьзую PHP 5.4 и в этой версии нет этой функции
+// использую для подсчёта и вывода всех имен таблиц в базе данных
+if (! function_exists('array_column')) {
+    function array_column(array $input, $columnKey, $indexKey = null) {
+        $array = array();
+        foreach ($input as $value) {
+            if ( !array_key_exists($columnKey, $value)) {
+                trigger_error("Key \"$columnKey\" does not exist in array");
+                return false;
+            }
+            if (is_null($indexKey)) {
+                $array[] = $value[$columnKey];
+            }
+            else {
+                if ( !array_key_exists($indexKey, $value)) {
+                    trigger_error("Key \"$indexKey\" does not exist in array");
+                    return false;
+                }
+                if ( ! is_scalar($value[$indexKey])) {
+                    trigger_error("Key \"$indexKey\" does not contain scalar value");
+                    return false;
+                }
+                $array[$value[$indexKey]] = $value[$columnKey];
+            }
+        }
+        return $array;
+    }
+}
+
+
 
 /*
 * Выводит теги <link rel="stylesheet" href=""></link>
@@ -123,13 +154,6 @@ generateOutputFiles('templates/css/css-source/common', 'templates/css/css-output
 generateOutputFiles('templates/html/html-source/sections', 'templates/html/html-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 generateOutputFiles('templates/html/html-source/common', 'templates/html/html-output/common', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 
-// echo '<pre>';
-// var_dump($tmpl_1);
-// echo '</pre>';
-// echo '</br>';
-// echo '<pre>';
-// var_dump($tmpl_2);
-// echo '</pre>';
 
 /*
 * Выводит содержимое всех файлов из папки $dirName
@@ -137,16 +161,6 @@ generateOutputFiles('templates/html/html-source/common', 'templates/html/html-ou
 */
 function includeFile( $dirName ) {
 
-	// global $tmpl_1;
-	// global $tmpl_2;
-
-	// echo '<pre>';
-	// var_dump($tmpl_1);
-	// echo '</pre>';
-	// echo '</br>';
-	// echo '<pre>';
-	// var_dump($tmpl_2);
-	// echo '</pre>';
 
 	$files = cleanDots_scandir($dirName);
 
