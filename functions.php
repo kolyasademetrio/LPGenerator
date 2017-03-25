@@ -5,15 +5,31 @@ define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
 define('FILEEXTENSION_HTML', 'html');
 
-function __autoload( $className ) {
-	$className = str_replace('..', '', $className);
-	require_once "model/$className.php";
+
+/**
+ * при создании экземпляра класса(объекта) Database
+ * подключает файл с классом из папки model/
+ * @param  string $class_name [description]
+ * @return [type]            [description]
+ */
+function __autoload($class_name) {
+	$class_name = str_replace('..', '', $class_name);
+	require_once "model/$class_name.php";
+}
+
+function myvardump($array) {
+	echo '<pre>';
+	var_dump($array);
+	echo '</pre><hr>';
+	die();
 }
 
 
-// array_column — Возвращает массив из значений одного столбца входного массива
-// добавляем свою функцию array_column так как испоьзую PHP 5.4 и в этой версии нет этой функции
-// использую для подсчёта и вывода всех имен таблиц в базе данных
+/* 
+* array_column — Возвращает массив из значений одного столбца входного массива
+* добавляем свою функцию array_column так как испоьзую PHP 5.4 и в этой версии нет этой функции
+* использую для подсчёта и вывода всех имен таблиц в базе данных
+*/ 
 if (! function_exists('array_column')) {
     function array_column(array $input, $columnKey, $indexKey = null) {
         $array = array();
@@ -42,146 +58,144 @@ if (! function_exists('array_column')) {
 }
 
 
+/**
+ * Выводит теги <link rel="stylesheet" href=""></link>
+ * с ссылкой на все файлы из директории $dir_name
+ * @param  string $dir_name путь к дирректории в формате 'templates/css/css-output/common'
+ */
+function load_stylesheets( $dir_name ) {
 
-/*
-* Выводит теги <link rel="stylesheet" href=""></link>
-* с ссылкой на все файлы из директории $dirName
-*/
-function loadStylesheets( $dirName ) {
-
-	$files = scandir( $dirName );
+	$files = scandir( $dir_name );
 
 	$files = array_diff($files, array('.', '..'));
 
-	foreach ($files as $fileName) {
+	foreach ($files as $file_name) {
 
-		$filePath = $dirName . '/' . $fileName;
+		$file_path = $dir_name . '/' . $file_name;
 
-		if ( file_exists($filePath) ) {
-			echo '<link rel="stylesheet" href="' . $filePath . '">';
+		if ( file_exists($file_path) ) {
+			echo '<link rel="stylesheet" href="' . $file_path . '">';
 		}
-		
 	}
-
 }
 
 
-/*
-* Возвращает расширение файла
-*/
-function getExtension( $filePathName ) {
-    $path_info = pathinfo($filePathName);
+/**
+ * Возвращает расширение файла
+ * @param  string $file_path_name полный путь к файлу с именем и расширением
+ * @return string возвращает расширение файла
+ */
+function get_extension( $file_path_name ) {
+    $path_info = pathinfo($file_path_name);
     return $path_info['extension'];
 }
 
 
-/*
-* Получает массив всех файлов в директории.
-* Удаляет из массива точки
-*/
-function cleanDots_scandir ($dirPath) {
-	$arrFiles = scandir( $dirPath );
-	$cleanArrFiles = array_diff($arrFiles, array('.', '..'));
+/**
+ * Получает массив всех файлов в директории. Удаляет из массива точки
+ * @param  string $dir_path путь к дирректории в формате 'templates/css/css-output/common'
+ * @return Array Возвращает массив всех файлов в дирректории(без точек)
+ */
+function clean_dots_scandir ($dir_path) {
+	$arr_files = scandir( $dir_path );
+	$arr_files_cleaned = array_diff($arr_files, array('.', '..'));
 
-	return $cleanArrFiles;
+	return $arr_files_cleaned;
 }
 
 
+/**
+ * Открывает исходные файлы в папке $source_dir берёт то что они возвращают
+ * и создаёт файлы css с такими же именами в папке $output_dir.
+ * Если файл есть - перезаписывает содержимое.
+ * Если файла нет - создает и записывает содержимое.
+ * @param  string $source_dir           	путь к исходному файлу в формате 'templates/css/css-source/sections'
+ * @param  string $output_dir           	путь к сгенерированному файлу в формате 'templates/css/css-output/sections'
+ * @param  string $source_file_extension	расширение исходного файла
+ * @param  string $output_file_extension	расширение сгенерированного файла
+ */
+function generate_output_files($source_dir, $output_dir, $source_file_extension, $output_file_extension) {
 
+	$files_source_array = clean_dots_scandir( $source_dir );
+	$files_output_array = clean_dots_scandir( $output_dir );
 
-/*
-* Открывает исходные файлы в папке $sourceDir берёт то что они возвращают
-* и создаёт файлы css с такими же именами.
-* Если файл есть - перезаписывает содержимое.
-* Если файла нет - создает и записывает содержимое.
-*/
-function generateOutputFiles($sourceDir, $outputDir, $sourceFileExtension, $outputFileExtension) {
+	foreach($files_source_array as $file_name) {
 
-	$filesSourceArray = cleanDots_scandir( $sourceDir );
-	$filesOutputArray = cleanDots_scandir( $outputDir );
+		$file_path = ROOT . '/' . $source_dir . '/' . $file_name;
 
-	foreach($filesSourceArray as $fileName) {
-
-		$filePath = ROOT . '/' . $sourceDir . '/' . $fileName;
-
-		if ( is_dir($filePath) ) {
-			array_map('unlink', glob("$filePath/*.*"));
-			rmdir($filePath);
+		if ( is_dir($file_path) ) {
+			array_map('unlink', glob("$file_path/*.*"));
+			rmdir($file_path);
 			continue;
 		}
 
-		$fileExtension = getExtension($filePath);
+		$file_extension = get_extension($file_path);
 
-		$name = substr($fileName, 0, strpos($fileName, '.' . $fileExtension));
+		$name = substr($file_name, 0, strpos($file_name, '.' . $file_extension));
 
-		if ( is_file($filePath) && $fileExtension === $sourceFileExtension ) { // вынести расширение в параметры
+		if ( is_file($file_path) && $file_extension === $source_file_extension ) { // вынести расширение в параметры
 
-			$fileСontent = include $filePath;
+			$file_content = include $file_path;
 
-			$fileOutputPath = $outputDir . '/' . $name . '.' . $outputFileExtension; // вынести расширение в параметры
+			$file_output_path = $output_dir . '/' . $name . '.' . $output_file_extension; // вынести расширение в параметры
 
-			$handle = fopen($fileOutputPath , 'w');
-			fwrite($handle, $fileСontent);
+			$handle = fopen($file_output_path , 'w');
+			fwrite($handle, $file_content);
 			fclose($handle);
 
-		 } else if ( is_file($filePath) ) {
-			unlink($filePath);
-		 } //else if ( is_dir($filePath) ) {
-		// 	array_map('unlink', glob("$filePath/*.*"));
-		// 	rmdir($filePath);
-		// }
-
+		 } else if ( is_file($file_path) ) {
+			unlink($file_path);
+		 } 
 	}
 
-	$filesSourceArray = cleanDots_scandir( $sourceDir );// массив исходных файлов стилей(без точек)
+	$files_source_array = clean_dots_scandir( $source_dir );// массив исходных файлов стилей(без точек)
 
-	$filesSourceArray = str_replace($sourceFileExtension, $outputFileExtension, $filesSourceArray);// массив исходных с заменой расширения php на css для сравнения с массивом сгенерированных файлов css
+	$files_source_array = str_replace($source_file_extension, $output_file_extension, $files_source_array);// массив исходных с заменой расширения php на css для сравнения с массивом сгенерированных файлов css
 
-	$filesOutputArray = cleanDots_scandir( $outputDir );// массив сгерерированных файлов стилей
+	$files_output_array = clean_dots_scandir( $output_dir );// массив сгерерированных файлов стилей
 
-	$array_diff = array_diff($filesOutputArray, $filesSourceArray);// разница массивов
+	$array_diff = array_diff($files_output_array, $files_source_array);// разница массивов
 
-	foreach ($array_diff as $fileToDelete) {
-		$fileToDeletePath = $outputDir . '/' . $fileToDelete;
-		unlink($fileToDeletePath);
+	foreach ($array_diff as $file_to_delete) {
+		$file_to_delete_path = $output_dir . '/' . $file_to_delete;
+		unlink($file_to_delete_path);
 	}
 
 }
 
-generateOutputFiles('templates/css/css-source/sections', 'templates/css/css-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
-generateOutputFiles('templates/css/css-source/common', 'templates/css/css-output/common', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+generate_output_files('templates/css/css-source/sections', 'templates/css/css-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
+generate_output_files('templates/css/css-source/common', 'templates/css/css-output/common', FILEEXTENSION_PHP, FILEEXTENSION_CSS);
 
-generateOutputFiles('templates/html/html-source/sections', 'templates/html/html-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
-generateOutputFiles('templates/html/html-source/common', 'templates/html/html-output/common', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
-
-
-/*
-* Выводит содержимое всех файлов из папки $dirName
-*
-*/
-function includeFile( $dirName ) {
+generate_output_files('templates/html/html-source/sections', 'templates/html/html-output/sections', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
+generate_output_files('templates/html/html-source/common', 'templates/html/html-output/common', FILEEXTENSION_PHP, FILEEXTENSION_HTML);
 
 
-	$files = cleanDots_scandir($dirName);
+/**
+ * С помощью include ыводит содержимое всех файлов из папки $dir_name
+ * @param  string $dir_name путь к дирректории в формате 'templates/html/html-output/sections'
+ */
+function include_files( $dir_name ) {
+
+	$files = clean_dots_scandir($dir_name);
 
 	$id = 1;// $id строки таблицы sections
 
-	foreach ($files as $fileName) {
+	foreach ($files as $file_name) {
 
-		$globalArr = 'tmpl_' . $id;
+		$global_arr = 'tmpl_' . $id;
 
-		global ${$globalArr};
+		global ${$global_arr};
 
-		$filePath = ROOT . '/' . $dirName . '/' . $fileName;
+		$file_path = ROOT . '/' . $dir_name . '/' . $file_name;
 
-		if ( file_exists($filePath) ) {
+		if ( file_exists($file_path) ) {
 
 			echo '<form name="block_edit_' . $id . '" method="post" action="handler.php">';
-				include $filePath;// вывод скомпилированного .html
+				include $file_path;// вывод скомпилированного .html
 
 				echo '<div class="input__wraper">';
 				$i = 0;
-				foreach (${$globalArr} as $key => $value) {
+				foreach (${$global_arr} as $key => $value) {
 
 					if ($i > 0) {
 						echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
@@ -190,22 +204,25 @@ function includeFile( $dirName ) {
 					$i++;
 					
 				}
-
-			echo '<input name="id" hidden="hidden" value="' . ${$globalArr}['id'] . '"><input type="submit" value="Изменить блок" name="submit">';
+			echo '<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '"><input type="submit" value="Изменить блок" name="submit">';
 			echo '</div></form>';
 
 			$id++;
-			
 		}
-		
 	}
 	clearstatcache();
 }
 
 
 
-
-function createArray() {
+/**
+ * Создаёт глобальный массив со всеми переданными переменными
+ * имя массива образуется как 'tmpl_' . $id, например: $tmpl_1 или $tmpl_common
+ * выходной массив имеет вид: $tmpl_common_css = array('id' => 'common_css', '$width' => 'width');
+ * выходной массив имеет вид: $tmpl_1 = array('id' => 1, '$width' => 'width');
+ * @param string передаются параметры, где первый - $id, остальные - добавляются в глобальный массив
+ */
+function create_array() {
 
 	$args = func_get_args();
 
@@ -216,7 +233,6 @@ function createArray() {
 	global ${$arrayName};
 
 	$i = 0;
-
 	foreach ($args as $value) {
 		if ($i > 0) {
 			${$arrayName}['$' . $value] = $value;
@@ -226,7 +242,6 @@ function createArray() {
 
 		$i++;
 	}
-	
 }
 
 

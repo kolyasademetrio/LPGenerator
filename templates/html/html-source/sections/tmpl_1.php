@@ -5,12 +5,12 @@ $db = new Database();
 
 $tmpl_id = 1;
 
-$title        = $db->getVal('title', $tmpl_id, 'Section title', 'html_content');
-$section_name = $db->getVal('section_name', $tmpl_id, 'section_1', 'html_content');
+$title        = $db->get_val('title', $tmpl_id, 'Section title', 'html_content');
+$section_name = $db->get_val('section_name', $tmpl_id, 'section_1', 'html_content');
 
 
 
-createArray($tmpl_id, 'title', 'section_name');
+create_array($tmpl_id, 'title', 'section_name');
 
 
 $html = '<!-- ' . $section_name . ' -->

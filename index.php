@@ -1,32 +1,25 @@
 <?php
 include 'header.php';
 
-// echo '<pre>';
-// var_dump($tmpl_1);
-// echo '</pre>';
+// myvardump($tmpl_common_css);
 
-includeFile('templates/html/html-output/sections');
+include_files('templates/html/html-output/sections');
 
 
 
 
-echo '<pre>';
-var_dump($tmpl_common);
-echo '</pre>';
-die;
-// echo '<hr>';
-// echo '<pre>';
-// var_dump($tmpl_1);
-// echo '</pre>';
-// echo '<hr>';
-// echo '<pre>';
-// var_dump($tmpl_2);
-// echo '</pre>';
-?>
 
-<pre>
 
-</pre>
 
-<?
-include 'footer.php'; ?>
+
+
+
+
+
+
+
+
+
+
+
+include 'footer.php';

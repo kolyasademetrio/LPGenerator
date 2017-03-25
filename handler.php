@@ -4,27 +4,22 @@ include_once 'functions.php';
 
 $id = trim($_POST['id']);
 
-$POSTarr = $_POST;
-unset($POSTarr['id']);
-unset($POSTarr['submit']);
+$POST_arr = $_POST;
+unset($POST_arr['id']);
+unset($POST_arr['submit']);
 
-foreach ($POSTarr as $keyPOSTarr => $valuePOSTarr) {
-	if ( empty($POSTarr[$keyPOSTarr]) || trim($POSTarr[$keyPOSTarr]) == '') {
-		unset( $POSTarr[$keyPOSTarr] );
+foreach ($POST_arr as $key_POST_arr => $value_POST_arr) {
+	if ( empty($POST_arr[$key_POST_arr]) || trim($POST_arr[$key_POST_arr]) == '') {
+		unset( $POST_arr[$key_POST_arr] );
 	}
 }
 
 $db = new Database();
 
-$db->getNumRow($POSTarr, $id);
+$db->update_tablecell_value($POST_arr, $id);
 
 
-// echo '<pre>';
-// var_dump($POSTarr);
-// echo '</pre><br>';
 
-// echo $id;
-// die();
 
 
 

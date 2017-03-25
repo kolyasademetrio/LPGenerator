@@ -27,17 +27,17 @@ class Database
         
     }
 
-    public function doQuery($query)
+    public function do_query($query)
     {
         $result = mysqli_query($this->db, $query);
         return $result;
     }
 
-    public function getVal($valName, $id, $default, $tableName)
+    public function get_val($val_name, $id, $default, $table_name)
     {
 
         // $stmt = $this->db->prepare("SELECT ? FROM ? WHERE id=?");
-        // $stmt->bind_param('s', $valName, $tableName, $id);
+        // $stmt->bind_param('s', $val_name, $table_name, $id);
         // $stmt->execute();
         // echo !$stmt->bind_result($val_name);
 
@@ -45,18 +45,13 @@ class Database
         //     echo $val_name;
         // }
 
-
-        $result = mysqli_query($this->db, "SELECT $valName FROM $tableName WHERE id='$id'");
+        $result = mysqli_query($this->db, "SELECT $val_name FROM $table_name WHERE id='$id'");
         if ($row = mysqli_fetch_assoc($result)) {
-            return $row[$valName];
+            return $row[$val_name];
         } else {
             return $default;
         }
     }
-
-
-
-
 
     /*
     * получаем массив из имен всех таблиц в нашей базе данных
@@ -71,39 +66,31 @@ class Database
 
 
     
-    public function getNumRow($POSTarr, $id) {
-
-        // получаем массив $tablesList из именамин всех таблиц в нашей базе данных
+    public function update_tablecell_value($POST_arr, $id) {
+        // получаем массив $tablesList с именами всех таблиц в нашей базе данных
         $tables_list_arr = $this->get_all_tablename_DB_arr();
 
     	foreach ($tables_list_arr as $table_name) {
 
-            // echo 'START of the table: ' . $table_name . '<br>';
-
-            foreach ($POSTarr as $key => $value) {
+            foreach ($POST_arr as $key => $value) {
 
                if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=$id")) {
-
                     $stmt->execute();
                     $stmt->store_result();
+
                     if ( $stmt->num_rows() ) {
 
                         $st = $this->db->prepare("UPDATE $table_name SET $key=? WHERE id=$id");
-
                         $st->bind_param('s', $value);
-
                         $st->execute();
 
                     }
-                
                 }
-
             }
-
-            // echo 'END of the table: ' . $table_name . '<br><hr>';
-
     	}
-
     } 
+
+
+
 
 }

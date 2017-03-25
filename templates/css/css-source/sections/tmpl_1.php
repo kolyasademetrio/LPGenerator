@@ -14,14 +14,14 @@ $tmpl_id = 1;
 *
 * @return значение переменной из базы данных  string $varValue
 */
-$section_name = $db->getVal('section_name', $tmpl_id, 'section', 'html_content');
+$section_name = $db->get_val('section_name', $tmpl_id, 'section', 'html_content');
 
-$section_padding_top = $db->getVal('section_padding_top', $tmpl_id, 47, 'css_content');
-$section_padding_bottom = $db->getVal('section_padding_bottom', $tmpl_id, 47, 'css_content');
-$border_width = $db->getVal('border_width', $tmpl_id, 10, 'css_content');
+$section_padding_top = $db->get_val('section_padding_top', $tmpl_id, 47, 'css_content');
+$section_padding_bottom = $db->get_val('section_padding_bottom', $tmpl_id, 47, 'css_content');
+$border_width = $db->get_val('border_width', $tmpl_id, 10, 'css_content');
 
 //создаем массив всех параметров для секции с id=1 (здесь $tmpl_id = $id = 1)
-createArray($tmpl_id, 'section_name', 'section_padding_top', 'section_padding_bottom', 'border_width');
+create_array($tmpl_id, 'section_name', 'section_padding_top', 'section_padding_bottom', 'border_width');
 
 // echo $section_padding
 

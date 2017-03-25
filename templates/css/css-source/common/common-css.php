@@ -4,11 +4,11 @@ include_once ROOT . '/functions.php';
 
 $db = new Database();
 
-$tmpl_id = 'common';
+$tmpl_id = 'common_css';
 
-$container_max_width = $db->getVal('container_max_width', $tmpl_id, 1030, 'css_content_common');
+$container_max_width = $db->get_val('container_max_width', $tmpl_id, 1030, 'css_content_common');
 
-createArray($tmpl_id, 'container_max_width');
+create_array($tmpl_id, 'container_max_width');
 
 
 $styles = '/*common styles*/
