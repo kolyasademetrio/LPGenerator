@@ -38,7 +38,6 @@ $styles = '/* ------------------------>>> ' . $section_name . ' <<<-------------
 	font-weight: normal;
 	font-size: 23px;
 	color: #565a65;
-	text-transform: uppercase;
 
 	margin: 0 0 55px;
 }

@@ -74,17 +74,21 @@ class Database
 
             foreach ($POST_arr as $key => $value) {
 
-               if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=$id")) {
+               if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=?")) {
+
+                    $stmt->bind_param('s', $id);
                     $stmt->execute();
                     $stmt->store_result();
 
                     if ( $stmt->num_rows() ) {
 
-                        $st = $this->db->prepare("UPDATE $table_name SET $key=? WHERE id=$id");
-                        $st->bind_param('s', $value);
+                        $st = $this->db->prepare("UPDATE $table_name SET $key=? WHERE id=?");
+                        $st->bind_param('ss', $value, $id);
                         $st->execute();
-
+                        $st->close();
                     }
+
+                    $stmt->close();
                 }
             }
     	}

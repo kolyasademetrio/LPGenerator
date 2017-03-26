@@ -8,9 +8,26 @@ $tmpl_id = 1;
 $title        = $db->get_val('title', $tmpl_id, 'Section title', 'html_content');
 $section_name = $db->get_val('section_name', $tmpl_id, 'section_1', 'html_content');
 
-
-
 create_array($tmpl_id, 'title', 'section_name');
+
+// Переменные без добавления в глобальный массив
+// Центрирование заголовка секции
+$title_text_center = $db->get_val('title_text_center', $tmpl_id, 'text-center', 'html_content');// одно из трёх значений
+
+// Заглавные или прописные буквы заголовка секции
+$title_text_uppercase = $db->get_val('title_text_uppercase', $tmpl_id, 'text_capitalize', 'html_content');// одно из трёх значений
+
+// Адаптивные классы Bootstrap при разных разрешениях монитора
+$col_lg =     $db->get_val('col_lg',     $tmpl_id, 3, 'html_content');// одно из .. значений
+$col_md =     $db->get_val('col_md',     $tmpl_id, 3, 'html_content');// одно из .. значений
+$col_sm =     $db->get_val('col_sm',     $tmpl_id, 3, 'html_content');// одно из .. значений
+$col_xs_768 = $db->get_val('col_xs_768', $tmpl_id, 3, 'html_content');// одно из .. значений
+$col_xs_479 = $db->get_val('col_xs_479', $tmpl_id, 3, 'html_content');// одно из .. значений
+$col_xs_380 = $db->get_val('col_xs_380', $tmpl_id, 3, 'html_content');// одно из .. значений
+
+$count_col = $db->get_val('count_col', $tmpl_id, 3, 'html_content');
+
+
 
 
 $html = '<!-- ' . $section_name . ' -->
@@ -18,54 +35,30 @@ $html = '<!-- ' . $section_name . ' -->
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h3 class="' . $section_name . '__title text-center">' . $title . '</h3>
+                <h3 class="' . $section_name . '__title ' . $title_text_center . ' ' . $title_text_uppercase . '">' . $title . '</h3>
             </div>
         </div>
     </div>
 
     <div class="container ' . $section_name . '__container">
-        <div class="row ' . $section_name . '__row">
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
+        <div class="row ' . $section_name . '__row">';
+
+
+
+for ($i=1; $i <= $count_col; $i++) { 
+                
+$html .=    '<div class="col-lg-' . $col_lg . ' col-md-' . $col_md . ' col-sm-' . $col_sm . ' col-xs-' . $col_xs_768 . ' col-xs-' . $col_xs_479 . ' col-xs-' . $col_xs_380 . ' ' . $section_name . '__innerItem">
                 <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_1.jpg" alt="" class="' . $section_name . '__img">
+                    <img src="img/' . $section_name . '/photos/' . $section_name . '_' . $i . '.jpg" alt="" class="' . $section_name . '__img">
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_2.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_3.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_4.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_5.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_6.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_7.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-4 col-xs-50 col-xs-100-380 ' . $section_name . '__innerItem">
-                <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_8.jpg" alt="" class="' . $section_name . '__img">
-                </div>
-            </div>
-        </div>
+            </div>';
+
+}
+
+
+
+            
+$html .= '</div>
     </div>
 </div>
 <!-- ' . $section_name . ' End -->';

@@ -9,15 +9,21 @@ $tmpl_id = 2;
 $title        = $db->get_val('title', $tmpl_id, 'Section title', 'html_content');
 $section_name = $db->get_val('section_name', $tmpl_id, 'section_1', 'html_content');
 
-
 create_array($tmpl_id, 'title', 'section_name', 'border_width');
+
+// переменные без добавления в глобальный массив
+$title_text_center = $db->get_val('title_text_center', $tmpl_id, 'text-center', 'html_content');// одно из трёх значений
+$title_text_uppercase = $db->get_val('title_text_uppercase', $tmpl_id, 'text_capitalize', 'html_content');// одно из трёх значений
+
+
+
 
 $html = '<!-- ' . $section_name . ' -->
 <div class="' . $section_name . '">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <div class="' . $section_name . '__title text-center">' . $title . '</div>
+                <div class="' . $section_name . '__title ' . $title_text_center . ' ' . $$title_text_uppercase . '">' . $title . '</div>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 /* ------------------------>>> services <<<----------------------------------------------------- */
 .services {
-	padding: 50px 0 50px;
+	padding: 40px 0 40px;
 	background: #fff url(../img/services/bg/bg_services.jpg) center 0 no-repeat;
 	background-size: cover;
-	border-bottom: 10px solid #369;
+	border-bottom: 5px solid #369;
 }
 
 .services__title {
@@ -12,7 +12,6 @@
 	font-weight: normal;
 	font-size: 23px;
 	color: #565a65;
-	text-transform: uppercase;
 
 	margin: 0 0 55px;
 }

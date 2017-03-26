@@ -50,6 +50,26 @@ body {
 	text-align: center;
 }
 
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-lowercase {
+	text-transform: lowercase;
+}
+
+.text-capitalize:first-letter {
+	text-transform: uppercase;
+}
+
 .hide {
 	display: none;
 }

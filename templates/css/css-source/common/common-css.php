@@ -6,7 +6,7 @@ $db = new Database();
 
 $tmpl_id = 'common_css';
 
-$container_max_width = $db->get_val('container_max_width', $tmpl_id, 1030, 'css_content_common');
+$container_max_width = $db->get_val('container_max_width', $tmpl_id, 1030, 'css_common');
 
 create_array($tmpl_id, 'container_max_width');
 
@@ -61,6 +61,26 @@ body {
 
 .text-center {
 	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-lowercase {
+	text-transform: lowercase;
+}
+
+.text-capitalize:first-letter {
+	text-transform: uppercase;
 }
 
 .hide {

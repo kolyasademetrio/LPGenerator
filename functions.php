@@ -105,6 +105,36 @@ function clean_dots_scandir ($dir_path) {
 
 
 /**
+ * Создаёт глобальный массив со всеми переданными переменными
+ * имя массива образуется как 'tmpl_' . $id, например: $tmpl_1 или $tmpl_common
+ * выходной массив имеет вид: $tmpl_common_css = array('id' => 'common_css', '$width' => 'width');
+ * выходной массив имеет вид: $tmpl_1 = array('id' => 1, '$width' => 'width');
+ * @param string передаются параметры, где первый - $id, остальные - добавляются в глобальный массив
+ */
+function create_array() {
+
+	$args = func_get_args();
+
+	$id = $args[0];
+
+	$arrayName = 'tmpl_' . $id;
+
+	global ${$arrayName};
+
+	$i = 0;
+	foreach ($args as $value) {
+		if ($i > 0) {
+			${$arrayName}['$' . $value] = $value;
+		} else {
+			${$arrayName}['id'] = $value;
+		}
+
+		$i++;
+	}
+}
+
+
+/**
  * Открывает исходные файлы в папке $source_dir берёт то что они возвращают
  * и создаёт файлы css с такими же именами в папке $output_dir.
  * Если файл есть - перезаписывает содержимое.
@@ -174,11 +204,89 @@ generate_output_files('templates/html/html-source/common', 'templates/html/html-
  * С помощью include ыводит содержимое всех файлов из папки $dir_name
  * @param  string $dir_name путь к дирректории в формате 'templates/html/html-output/sections'
  */
-function include_files( $dir_name ) {
+function include_files($dir_name) {
 
 	$files = clean_dots_scandir($dir_name);
 
 	$id = 1;// $id строки таблицы sections
+
+	$select_tags_name = array(
+		'col_lg' => array (
+							 'lable_text' => 'больше 1200',
+							 'option_tags' => array (
+														'<option value="12">Одна</option>',
+														'<option value="6">Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3" selected>Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+							 						),
+
+		),
+		'col_md' => array (
+							 'lable_text' => 'больше 992',
+							 'option_tags' => array (
+														'<option value="12">Одна</option>',
+														'<option value="6">Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3" selected>Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+							 						),
+	    ),
+		'col_sm' => array (
+							 'lable_text' => 'больше 768',
+							 'option_tags' => array (
+														'<option value="12">Одна</option>',
+														'<option value="6" selected>Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3">Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+							 					   ),
+		),
+		'col_xs_768' => array (
+								'lable_text' => 'меньше 768',
+								'option_tags' => array (
+														'<option value="12">Одна</option>',
+														'<option value="6" selected>Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3">Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+													  ),
+		),
+		'col_xs_479' => array (
+								'lable_text' => 'меньше 479',
+								'option_tags' => array (
+														'<option value="100-479" selected>Одна</option>',
+														'<option value="6">Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3">Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+													  ),
+		),
+		'col_xs_380' => array (
+								'lable_text' => 'меньше 360',
+								'option_tags' => array (
+														'<option value="100-380" selected>Одна</option>',
+														'<option value="6">Две</option>',
+														'<option value="4">Три</option>',
+														'<option value="3">Четыре</option>',
+														'<option value="20per">Пять</option>',
+														'<option value="2">Шесть</option>',
+														'<option value="1">Двенадцать</option>',
+													  ),
+		),
+	);
+
+
 
 	foreach ($files as $file_name) {
 
@@ -190,23 +298,84 @@ function include_files( $dir_name ) {
 
 		if ( file_exists($file_path) ) {
 
-			echo '<form name="block_edit_' . $id . '" method="post" action="handler.php">';
-				include $file_path;// вывод скомпилированного .html
+			include $file_path;// вывод скомпилированного .html
+			?>
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form__wrapper">
+							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
+								<div class="inputs__wraper">
 
-				echo '<div class="input__wraper">';
-				$i = 0;
-				foreach (${$global_arr} as $key => $value) {
+								<?php
+								$i = 0;
+								foreach (${$global_arr} as $key => $value) {
+									if ($i > 0) {
+										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+									}
+									$i++;
+								}
 
-					if ($i > 0) {
-						echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
-					}
+									// Положение заголовка блока
+									echo '<div class="title_text_center">
+										<label>Положение заголовка блока<select name="title_text_center"><option value="text-center">По центру</option><option value="text-left">Слева</option><option value="text-right">Справа</option></select></label>
+									</div>';
 
-					$i++;
-					
-				}
-			echo '<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '"><input type="submit" value="Изменить блок" name="submit">';
-			echo '</div></form>';
 
+									// Заглавные/прописные буквы заголовка блока
+									echo '<div class="title_text_uppercase">
+										<label>Заглавные/прописные буквы заголовка блока<select name="title_text_uppercase"><option value="text-uppercase">Все большие</option><option value="text-capitalize">Первая большая</option><option value="text-lowercase">Все маленькие</option></select></label>
+									</div>';
+
+
+									// Выбрать блок ???????????????? не подключен но выведен в index.php
+									echo '<div class="block_changed">
+										<label>Выбрать блок <input type="checkbox" name="block_selected" value="selected" checked></label>
+									</div>';
+
+
+									// Кол-во колонок для разрешения
+									echo '<div class="bootstrap_classes">';
+										foreach ($select_tags_name as $attr_name => $lable_text) {
+											echo '<div class="bootstrap_classes_item">
+												  	<label>Кол-во колонок для разрешения ' . $lable_text['lable_text'] . 'px:
+												       <select name="' . $attr_name . '">';
+
+												       for ($i = 0; $i < count($lable_text['option_tags']); $i++) {
+												       		echo $lable_text['option_tags'][$i];
+												       }
+															
+											echo	   '</select>
+												  	</label>
+												  </div><!-- bootstrap_classes_item --!>';
+										}	
+									echo '</div><!-- bootstrap_classes -->';
+
+
+									// Количество блоков
+									echo '<div class="bootstrap_col_qty">
+												<label>Количество блоков: 
+													<input type="number" name="count_col" min="1" max="20" value="4">		
+												</label>
+										  </div>';
+
+
+
+									echo '<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '">
+										 <div class="submit_wrap">
+										 		<input type="submit" value="Изменить блок" name="submit">
+										 </div>';
+								?>
+
+				
+								</div><!-- inputs__wraper -->
+							</form>
+						</div><!-- form__wrapper -->
+					</div><!-- col-xs-12 -->
+				</div><!-- row -->
+			</div><!-- container -->
+
+			<?php
 			$id++;
 		}
 	}
@@ -214,35 +383,53 @@ function include_files( $dir_name ) {
 }
 
 
-
 /**
- * Создаёт глобальный массив со всеми переданными переменными
- * имя массива образуется как 'tmpl_' . $id, например: $tmpl_1 или $tmpl_common
- * выходной массив имеет вид: $tmpl_common_css = array('id' => 'common_css', '$width' => 'width');
- * выходной массив имеет вид: $tmpl_1 = array('id' => 1, '$width' => 'width');
- * @param string передаются параметры, где первый - $id, остальные - добавляются в глобальный массив
+ * Выводит форму для общих стилей
+ * @param  Array $arr глобальный массив с переменными для полей формы(из файла common-css.php)
  */
-function create_array() {
+function include_form($arr) {
 
+	$id = $arr['id'];
+	unset($arr['id']);
+	?>
+	<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form__wrapper">
+							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
+								<div class="inputs__wraper">
+
+								<?php
+								foreach ($arr as $key => $value) {
+									echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+								}
+								?>
+
+									<input name="id" hidden="hidden" value="<?php echo $id; ?>">
+									<input type="submit" value="Изменить" name="submit">
+								</div><!-- inputs__wraper -->
+							</form>
+						</div><!-- form__wrapper -->
+					</div><!-- col-xs-12 -->
+				</div><!-- row -->
+			</div><!-- container -->
+<?php
+}
+
+
+
+function loop_get_string_bootstrap_item() {
 	$args = func_get_args();
 
-	$id = $args[0];
 
-	$arrayName = 'tmpl_' . $id;
-
-	global ${$arrayName};
-
-	$i = 0;
-	foreach ($args as $value) {
-		if ($i > 0) {
-			${$arrayName}['$' . $value] = $value;
-		} else {
-			${$arrayName}['id'] = $value;
-		}
-
-		$i++;
-	}
 }
+
+
+
+
+
+
+
 
 
 
