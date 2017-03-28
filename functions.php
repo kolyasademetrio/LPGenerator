@@ -210,80 +210,13 @@ function include_files($dir_name) {
 
 	$id = 1;// $id строки таблицы sections
 
-	$select_tags_name = array(
-		'col_lg' => array (
-							 'lable_text' => 'больше 1200',
-							 'option_tags' => array (
-														'<option value="12">Одна</option>',
-														'<option value="6">Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3" selected>Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-							 						),
-
-		),
-		'col_md' => array (
-							 'lable_text' => 'больше 992',
-							 'option_tags' => array (
-														'<option value="12">Одна</option>',
-														'<option value="6">Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3" selected>Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-							 						),
-	    ),
-		'col_sm' => array (
-							 'lable_text' => 'больше 768',
-							 'option_tags' => array (
-														'<option value="12">Одна</option>',
-														'<option value="6" selected>Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3">Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-							 					   ),
-		),
-		'col_xs_768' => array (
-								'lable_text' => 'меньше 768',
-								'option_tags' => array (
-														'<option value="12">Одна</option>',
-														'<option value="6" selected>Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3">Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-													  ),
-		),
-		'col_xs_479' => array (
-								'lable_text' => 'меньше 479',
-								'option_tags' => array (
-														'<option value="100-479" selected>Одна</option>',
-														'<option value="6">Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3">Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-													  ),
-		),
-		'col_xs_380' => array (
-								'lable_text' => 'меньше 360',
-								'option_tags' => array (
-														'<option value="100-380" selected>Одна</option>',
-														'<option value="6">Две</option>',
-														'<option value="4">Три</option>',
-														'<option value="3">Четыре</option>',
-														'<option value="20per">Пять</option>',
-														'<option value="2">Шесть</option>',
-														'<option value="1">Двенадцать</option>',
-													  ),
-		),
+	$select_options = array(
+		'col_lg'     => 'больше 1200',
+		'col_md'     => 'больше 992',
+		'col_sm'     => 'больше 768',
+		'col_xs_768' => 'меньше 768',
+		'col_xs_479' => 'меньше 479',
+		'col_xs_380' => 'меньше 360',
 	);
 
 
@@ -304,7 +237,7 @@ function include_files($dir_name) {
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form__wrapper">
-							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
+							<form name="block_edit_<?php echo $id; ?>" id="<?php echo $id; ?>" method="post" action="handler.php">
 								<div class="inputs__wraper">
 
 								<?php
@@ -318,53 +251,75 @@ function include_files($dir_name) {
 
 									// Положение заголовка блока
 									echo '<div class="title_text_center">
-										<label>Положение заголовка блока<select name="title_text_center"><option value="text-center">По центру</option><option value="text-left">Слева</option><option value="text-right">Справа</option></select></label>
-									</div>';
+											  <label>Положение заголовка блока
+													<select name="title_text_center">
+														<option value="">Выбрать</option>
+														<option value="text-center">По центру</option>
+														<option value="text-left">Слева</option>
+														<option value="text-right">Справа</option>
+													</select>
+											   </label>
+										 </div>';
 
 
 									// Заглавные/прописные буквы заголовка блока
 									echo '<div class="title_text_uppercase">
-										<label>Заглавные/прописные буквы заголовка блока<select name="title_text_uppercase"><option value="text-uppercase">Все большие</option><option value="text-capitalize">Первая большая</option><option value="text-lowercase">Все маленькие</option></select></label>
-									</div>';
+											  <label>Заглавные/прописные буквы заголовка блока
+											  		<select name="title_text_uppercase">
+											  			<option value="">Выбрать</option>
+											  			<option value="text-uppercase">Все большие</option>
+											  			<option value="text-capitalize">Первая большая</option>
+											  			<option value="text-lowercase">Все маленькие</option>
+										  			</select>
+											  </label>
+										  </div><!-- .title_text_uppercase -->';
 
 
 									// Выбрать блок ???????????????? не подключен но выведен в index.php
 									echo '<div class="block_changed">
-										<label>Выбрать блок <input type="checkbox" name="block_selected" value="selected" checked></label>
-									</div>';
-
-
-									// Кол-во колонок для разрешения
-									echo '<div class="bootstrap_classes">';
-										foreach ($select_tags_name as $attr_name => $lable_text) {
-											echo '<div class="bootstrap_classes_item">
-												  	<label>Кол-во колонок для разрешения ' . $lable_text['lable_text'] . 'px:
-												       <select name="' . $attr_name . '">';
-
-												       for ($i = 0; $i < count($lable_text['option_tags']); $i++) {
-												       		echo $lable_text['option_tags'][$i];
-												       }
-															
-											echo	   '</select>
-												  	</label>
-												  </div><!-- bootstrap_classes_item --!>';
-										}	
-									echo '</div><!-- bootstrap_classes -->';
-
+										  	  <label>Выбрать блок 
+										  	  		<input type="checkbox" name="block_selected" value="selected" checked>
+										  	   </label>
+										   </div><!-- .block_changed -->';
 
 									// Количество блоков
 									echo '<div class="bootstrap_col_qty">
 												<label>Количество блоков: 
-													<input type="number" name="count_col" min="1" max="20" value="4">		
+													<input type="number" name="count_col" min="1" max="20" value="">		
 												</label>
-										  </div>';
+										  </div><!-- .bootstrap_col_qty -->';
 
+									// Кол-во колонок для разрешения
+									echo '<div class="bootstrap_classes">';
+										foreach ($select_options as $attr_name => $lable_text) {
+											echo '<div class="bootstrap_classes_item">
+												  	<label>Кол-во колонок для разрешения ' . $lable_text . 'px:
+												       <select name="' . $attr_name . '">';
 
+											echo       		'<option value="">Выбрать</option>
+															<option value="12">Одна</option>
+															<option value="6">Две</option>
+															<option value="4">Три</option>
+															<option value="3">Четыре</option>
+															<option value="20per">Пять</option>
+															<option value="2">Шесть</option>
+															<option value="1">Двенадцать</option>';	       
+															
+											echo	   '</select>
+												  	</label>
+												  </div><!-- .bootstrap_classes_item -->';
+										}	
+									echo '</div><!-- bootstrap_classes -->';
 
-									echo '<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '">
-										 <div class="submit_wrap">
+									// input[class="id_hidden_wrap"]
+									echo '<div class="id_hidden_wrap">
+												<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '">
+										  </div><!-- .id_hidden_wrap -->';
+										 
+									// input[type="submit"]
+									echo '<div class="submit_wrap">
 										 		<input type="submit" value="Изменить блок" name="submit">
-										 </div>';
+										 </div><!-- .submit_wrap -->';
 								?>
 
 				
@@ -396,7 +351,7 @@ function include_form($arr) {
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form__wrapper">
-							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
+							<form name="block_edit_<?php echo $id; ?>" id-"<?php echo $id; ?>" method="post" action="handler.php">
 								<div class="inputs__wraper">
 
 								<?php

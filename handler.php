@@ -17,10 +17,10 @@ unset($POST_arr['submit']);
 // 	echo 'Проверка на чекбокс временно в handler.php';
 // 	myvardump($_POST['block_selected']);
 // }
-session_start();
-foreach ($_POST as $key => $value) {
-	$_SESSION[$key] = $_POST[$key];
-}
+// session_start();
+// foreach ($_POST as $key => $value) {
+// 	$_SESSION[$key] = $_POST[$key];
+// }
 
 
 

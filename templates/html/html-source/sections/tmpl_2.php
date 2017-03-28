@@ -23,7 +23,7 @@ $html = '<!-- ' . $section_name . ' -->
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <div class="' . $section_name . '__title ' . $title_text_center . ' ' . $$title_text_uppercase . '">' . $title . '</div>
+                <div class="' . $section_name . '__title ' . $title_text_center . ' ' . $title_text_uppercase . '">' . $title . '</div>
             </div>
         </div>
     </div>
