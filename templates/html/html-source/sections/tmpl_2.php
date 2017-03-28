@@ -19,7 +19,7 @@ $title_text_uppercase = $db->get_val('title_text_uppercase', $tmpl_id, 'text_cap
 
 
 $html = '<!-- ' . $section_name . ' -->
-<div class="' . $section_name . '">
+<div class="' . $section_name . '" id="' . $tmpl_id . '">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">

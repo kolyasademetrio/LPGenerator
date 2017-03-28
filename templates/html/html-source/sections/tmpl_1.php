@@ -31,7 +31,7 @@ $count_col = $db->get_val('count_col', $tmpl_id, 3, 'html_content');
 
 
 $html = '<!-- ' . $section_name . ' -->
-<div class="' . $section_name . '">
+<div class="' . $section_name . '" id="' . $tmpl_id . '">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">

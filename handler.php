@@ -10,18 +10,7 @@ $POST_arr = $_POST;
 unset($POST_arr['id']);
 unset($POST_arr['submit']);
 
-// myvardump($POST_arr);
-
-// if ($_POST['block_selected'] == 'selected') {
-
-// 	echo 'Проверка на чекбокс временно в handler.php';
-// 	myvardump($_POST['block_selected']);
-// }
-// session_start();
-// foreach ($_POST as $key => $value) {
-// 	$_SESSION[$key] = $_POST[$key];
-// }
-
+// myvardump($id);
 
 
 foreach ($POST_arr as $key_POST_arr => $value_POST_arr) {
@@ -50,7 +39,7 @@ $db->update_tablecell_value($POST_arr, $id);
 
 
 
-header('Location: index.php');
+header('Location: index.php#' . $id);
 exit;
 
 

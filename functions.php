@@ -237,7 +237,7 @@ function include_files($dir_name) {
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form__wrapper">
-							<form name="block_edit_<?php echo $id; ?>" id="<?php echo $id; ?>" method="post" action="handler.php">
+							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
 								<div class="inputs__wraper">
 
 								<?php
