@@ -121,33 +121,18 @@ function create_array() {
 
 	global ${$arrayName};
 
-/*
-	$i = 0;
-	foreach ($args as $value) {
-		if ($i > 0) {
-			${$arrayName}['$' . $value] = $value;
-		} else {
-			${$arrayName}['id'] = $value;
-		}
-
-		$i++;
-	}
-*/
-
-	// for ($i = 0; $i < count($args); $i++) {
-	// 	if ($i == 0) {
-	// 		${$arrayName}['id'] = $args[$i];
-	// 	} elseif ($i == (count($args) - 1)) {
-	// 		${$arrayName}['col_count'] = $args[$i];
-	// 	} else {
-	// 		${$arrayName}['$' . $args[$i]] = $args[$i];
-	// 	}
-	// }
-
 	for ($i = 0; $i < count($args); $i++) {
 		if ( !is_array($args[$i]) ) {
 
-			${$arrayName}['$' . $args[$i]] = $args[$i];
+			if ($i > 0) {
+
+				${$arrayName}['$' . $args[$i]] = $args[$i];
+
+			} else {
+
+				${$arrayName}['id'] = $args[$i];
+
+			}
 
 		} else {
 
@@ -270,21 +255,23 @@ function include_files($dir_name) {
 
 								<?php
 
-									var_dump(${$global_arr});
+									// var_dump(${$global_arr});
 
 									// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
 									echo '<div class="inputs_image_download_wrap row">';
-										  for ($i = 0; $i < ${$global_arr}['col_count']; $i++) {
-										  	 echo '<div class="col-xs-' . ${$global_arr}['col_md'] . '"><input type="file" name="col_image"></div>';
+										  for ($i = 0; $i < ${$global_arr}['count_col']; $i++) {
+										  	 echo '<div class="col-xs-' . ${$global_arr}['col_lg'] . '">
+										  	 			<input type="file" name="col_image">
+									  	 		   </div>';
 										  }
 									echo '</div>';
 
 									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
 									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
-									// из перебора исключаются ключи id и col_count
+									// из перебора исключаются ключи id и count_col
 									foreach (${$global_arr} as $key => $value) {
 
-										if ($key == 'id' || $key == 'col_count' || $key == 'col_md') continue;
+										if ($key == 'id' || $key == 'count_col' || $key == 'col_md') continue;
 
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 									}
