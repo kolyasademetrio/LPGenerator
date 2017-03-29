@@ -18,8 +18,10 @@ include_once 'functions.php';
     <link rel="stylesheet" href="assets/plugins/magnific-popup/magnific-popup.css">
     <!-- fonts css -->
     <link rel="stylesheet" href="assets/css/fonts.css">
-    <!-- custom css -->
+    <link rel="stylesheet" href="assets/css/admin.css">
 
+
+    <!-- custom css -->
     <!-- выводим ссылки на таблицы стилей с помощью тегов <link> -->
     <?php load_stylesheets('templates/css/css-output/common'); ?>
     <?php load_stylesheets('templates/css/css-output/sections'); ?>

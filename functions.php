@@ -229,7 +229,7 @@ function include_files($dir_name) {
 		'col_sm'     => 'больше 768',
 		'col_xs_768' => 'меньше 768',
 		'col_xs_479' => 'меньше 479',
-		'col_xs_380' => 'меньше 360',
+		'col_xs_380' => 'меньше 380',
 	);
 
 
@@ -249,7 +249,7 @@ function include_files($dir_name) {
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="form__wrapper">
+						<div class="form__wrapper admin">
 							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
 								<div class="inputs__wraper">
 
