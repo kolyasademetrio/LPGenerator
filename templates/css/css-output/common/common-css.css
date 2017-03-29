@@ -96,6 +96,17 @@ body {
 	}
 }
 
+@media (min-width: 768px) {
+	.col-sm-20per {
+		width: 20%;
+		float: left;
+		min-height: 1px;
+		padding-left: 5px;
+		padding-right: 5px;
+		position: relative;
+	}
+}
+
 @media (max-width: 479px) {
 	.col-xs-100-479 {
 		width: 100%;

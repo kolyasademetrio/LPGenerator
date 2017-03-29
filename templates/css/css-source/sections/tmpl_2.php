@@ -12,7 +12,7 @@ $section_padding_top = $db->get_val('section_padding_top', $tmpl_id, 47, 'css_co
 $section_padding_bottom = $db->get_val('section_padding_bottom', $tmpl_id, 47, 'css_content');
 $border_width = $db->get_val('border_width', $tmpl_id, 10, 'css_content');
 
-create_array($tmpl_id, 'section_name', 'section_padding_top', 'section_padding_bottom', 'border_width');
+create_array('section_name', 'section_padding_top', 'section_padding_bottom', 'border_width', array('id' => $tmpl_id));
 
 
 $styles = '/* ------------------------>>> ' . $section_name . ' <<<----------------------------------------------------- */

@@ -121,6 +121,7 @@ function create_array() {
 
 	global ${$arrayName};
 
+/*
 	$i = 0;
 	foreach ($args as $value) {
 		if ($i > 0) {
@@ -130,6 +131,33 @@ function create_array() {
 		}
 
 		$i++;
+	}
+*/
+
+	// for ($i = 0; $i < count($args); $i++) {
+	// 	if ($i == 0) {
+	// 		${$arrayName}['id'] = $args[$i];
+	// 	} elseif ($i == (count($args) - 1)) {
+	// 		${$arrayName}['col_count'] = $args[$i];
+	// 	} else {
+	// 		${$arrayName}['$' . $args[$i]] = $args[$i];
+	// 	}
+	// }
+
+	for ($i = 0; $i < count($args); $i++) {
+		if ( !is_array($args[$i]) ) {
+
+			${$arrayName}['$' . $args[$i]] = $args[$i];
+
+		} else {
+
+			foreach ($args[$i] as $key => $value) {
+
+				${$arrayName}[$key] = $value;
+
+			}
+
+		}
 	}
 }
 
@@ -237,17 +265,29 @@ function include_files($dir_name) {
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form__wrapper">
-							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php">
+							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
 								<div class="inputs__wraper">
 
 								<?php
-								$i = 0;
-								foreach (${$global_arr} as $key => $value) {
-									if ($i > 0) {
+
+									var_dump(${$global_arr});
+
+									// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
+									echo '<div class="inputs_image_download_wrap row">';
+										  for ($i = 0; $i < ${$global_arr}['col_count']; $i++) {
+										  	 echo '<div class="col-xs-' . ${$global_arr}['col_md'] . '"><input type="file" name="col_image"></div>';
+										  }
+									echo '</div>';
+
+									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
+									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
+									// из перебора исключаются ключи id и col_count
+									foreach (${$global_arr} as $key => $value) {
+
+										if ($key == 'id' || $key == 'col_count' || $key == 'col_md') continue;
+
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 									}
-									$i++;
-								}
 
 									// Положение заголовка блока
 									echo '<div class="title_text_center">
@@ -296,7 +336,7 @@ function include_files($dir_name) {
 												  	<label>Кол-во колонок для разрешения ' . $lable_text . 'px:
 												       <select name="' . $attr_name . '">';
 
-											echo       		'<option value="">Выбрать</option>
+											echo       	   '<option value="">Выбрать</option>
 															<option value="12">Одна</option>
 															<option value="6">Две</option>
 															<option value="4">Три</option>
@@ -310,6 +350,8 @@ function include_files($dir_name) {
 												  </div><!-- .bootstrap_classes_item -->';
 										}	
 									echo '</div><!-- bootstrap_classes -->';
+
+									echo  '</div>';
 
 									// input[class="id_hidden_wrap"]
 									echo '<div class="id_hidden_wrap">

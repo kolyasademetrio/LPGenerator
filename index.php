@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
 
-// myvardump($tmpl_common_css);
+// myvardump($tmpl_1);
 
 
 

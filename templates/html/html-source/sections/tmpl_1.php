@@ -8,7 +8,12 @@ $tmpl_id = 1;
 $title        = $db->get_val('title', $tmpl_id, 'Section title', 'html_content');
 $section_name = $db->get_val('section_name', $tmpl_id, 'section_1', 'html_content');
 
-create_array($tmpl_id, 'title', 'section_name');
+// Количество блоков в сетке Bootstrap
+$count_col = $db->get_val('count_col', $tmpl_id, 3, 'html_content');
+
+
+
+// myvardump($tmpl_1);
 
 // Переменные без добавления в глобальный массив
 // Центрирование заголовка секции
@@ -25,11 +30,11 @@ $col_xs_768 = $db->get_val('col_xs_768', $tmpl_id, 3, 'html_content');// одн�
 $col_xs_479 = $db->get_val('col_xs_479', $tmpl_id, 3, 'html_content');// одно из .. значений
 $col_xs_380 = $db->get_val('col_xs_380', $tmpl_id, 3, 'html_content');// одно из .. значений
 
-$count_col = $db->get_val('count_col', $tmpl_id, 3, 'html_content');
+
+create_array('title', 'section_name', array('id' => $tmpl_id,'count_col' => $count_col, 'col_md' => $col_md));
 
 
-
-
+// <div class="' . $section_name . '" id="' . $tmpl_id . '"> передаем id=......$tmpl_id для переадресации к тому же экрану с которого был отправлен запрос
 $html = '<!-- ' . $section_name . ' -->
 <div class="' . $section_name . '" id="' . $tmpl_id . '">
     <div class="container">
