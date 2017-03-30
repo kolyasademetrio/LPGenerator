@@ -1,7 +1,38 @@
-.form__wrapper.admin .inputs_image_download_wrap input[type="file"] {
-	// display: block;
-	// width: 100%;
-	// position: absolute;
-	// left: 0;
-	// top: 0;
+
+
+
+div[class$="innerItem"].hover {
+	-webkit-transition: all .6s ease 0s;
+	-moz-transition: all .6s ease 0s;
+	-o-transition: all .6s ease 0s;
+	transition: all .6s ease 0s;
+
+	// border: 3px dashed #fff;
+	position: relative;
 }
+
+div[class$="innerItem"].hover:before {
+	content: "Drop for download";
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 10% 10px 10px;
+	text-align: center;
+	color: #000;
+	font-size: 100%;
+	background-color: rgba(255, 255, 255, .8);
+}
+
+div[class$="innerItem"].error:before {
+	content: "Error";
+	background-color: rgba(255, 0, 0, .5);
+}
+
+div[class$="innerItem"].drop:before {
+	content: "Error";
+	background-color: rgba(255, 0, 0, .5);
+}
+

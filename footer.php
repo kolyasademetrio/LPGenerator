@@ -10,6 +10,8 @@
     <script type="text/javascript" src="assets/js/custom.js"></script>
     <!-- initializations -->
     <script type="text/javascript" src="assets/js/init.js"></script>
+    <!-- admin.js -->
+    <script type="text/javascript" src="assets/js/admin.js"></script>
 
 </body>
 </html>

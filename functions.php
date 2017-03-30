@@ -243,14 +243,14 @@ function include_files($dir_name) {
 		$file_path = ROOT . '/' . $dir_name . '/' . $file_name;
 
 		if ( file_exists($file_path) ) {
-
+			echo '<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">';
 			include $file_path;// вывод скомпилированного .html
 			?>
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form__wrapper admin">
-							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
+							<!-- <form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data"> -->
 								<div class="inputs__wraper">
 
 								<?php
