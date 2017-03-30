@@ -271,7 +271,8 @@ function include_files($dir_name) {
 									// из перебора исключаются ключи id и count_col
 									foreach (${$global_arr} as $key => $value) {
 
-										if ($key == 'id' || $key == 'count_col' || $key == 'col_md') continue;
+										if ($key == 'id' || $key == 'count_col' || strpos($key, 'col_')) continue;
+										// if ($key == 'id' || $key == 'count_col' || $key == 'col_lg') continue;
 
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 									}
