@@ -1,17 +1,15 @@
 
+// div[class$="innerItem"]
 
-
-div[class$="innerItem"].hover {
+div[class$="innerItem"] {
 	-webkit-transition: all .6s ease 0s;
 	-moz-transition: all .6s ease 0s;
 	-o-transition: all .6s ease 0s;
 	transition: all .6s ease 0s;
-
-	// border: 3px dashed #fff;
 	position: relative;
 }
 
-div[class$="innerItem"].hover:before {
+.hover:before {
 	content: "Drop for download";
 	display: block;
 	position: absolute;

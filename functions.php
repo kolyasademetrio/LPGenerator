@@ -269,9 +269,11 @@ function include_files($dir_name) {
 									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
 									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
 									// из перебора исключаются ключи id и count_col
-									foreach (${$global_arr} as $key => $value) {
 
-										if ($key == 'id' || $key == 'count_col' || strpos($key, 'col_')) continue;
+									// myvardump(${$global_arr});
+									foreach (${$global_arr} as $key => $value) {
+										if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg')) continue;
+										if (strpos($key,'col_lg')) continue;
 										// if ($key == 'id' || $key == 'count_col' || $key == 'col_lg') continue;
 
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
