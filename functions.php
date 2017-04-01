@@ -272,37 +272,18 @@ function include_files($dir_name) {
 
 									// myvardump(${$global_arr});
 									foreach (${$global_arr} as $key => $value) {
-										if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg')) continue;
-										if (strpos($key,'col_lg')) continue;
-										// if ($key == 'id' || $key == 'count_col' || $key == 'col_lg') continue;
+
+										if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg') === 0) continue;
 
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 									}
 
 									// Положение заголовка блока
-									echo '<div class="title_text_center">
-											  <label>Положение заголовка блока
-													<select name="title_text_center">
-														<option value="">Выбрать</option>
-														<option value="text-center">По центру</option>
-														<option value="text-left">Слева</option>
-														<option value="text-right">Справа</option>
-													</select>
-											   </label>
-										 </div>';
+									include 'templates/html/modules-admin/title_text_center.php';
 
 
 									// Заглавные/прописные буквы заголовка блока
-									echo '<div class="title_text_uppercase">
-											  <label>Заглавные/прописные буквы заголовка блока
-											  		<select name="title_text_uppercase">
-											  			<option value="">Выбрать</option>
-											  			<option value="text-uppercase">Все большие</option>
-											  			<option value="text-capitalize">Первая большая</option>
-											  			<option value="text-lowercase">Все маленькие</option>
-										  			</select>
-											  </label>
-										  </div><!-- .title_text_uppercase -->';
+									include 'templates/html/modules-admin/title_text_uppercase.php';
 
 
 									// Выбрать блок ???????????????? не подключен но выведен в index.php
@@ -313,45 +294,16 @@ function include_files($dir_name) {
 										   </div><!-- .block_changed -->';
 
 									// Количество блоков
-									echo '<div class="bootstrap_col_qty">
-												<label>Количество блоков: 
-													<input type="number" name="count_col" min="1" max="20" value="">		
-												</label>
-										  </div><!-- .bootstrap_col_qty -->';
+									include 'templates/html/modules-admin/bootstrap_col_qty.php';
 
 									// Кол-во колонок для разрешения
-									echo '<div class="bootstrap_classes">';
-										foreach ($select_options as $attr_name => $lable_text) {
-											echo '<div class="bootstrap_classes_item">
-												  	<label>Кол-во колонок для разрешения ' . $lable_text . 'px:
-												       <select name="' . $attr_name . '">';
-
-											echo       	   '<option value="">Выбрать</option>
-															<option value="12">Одна</option>
-															<option value="6">Две</option>
-															<option value="4">Три</option>
-															<option value="3">Четыре</option>
-															<option value="20per">Пять</option>
-															<option value="2">Шесть</option>
-															<option value="1">Двенадцать</option>';	       
-															
-											echo	   '</select>
-												  	</label>
-												  </div><!-- .bootstrap_classes_item -->';
-										}	
-									echo '</div><!-- bootstrap_classes -->';
-
-									echo  '</div>';
+									include 'templates/html/modules-admin/bootstrap_classes.php';
 
 									// input[class="id_hidden_wrap"]
-									echo '<div class="id_hidden_wrap">
-												<input name="id" hidden="hidden" value="' . ${$global_arr}['id'] . '">
-										  </div><!-- .id_hidden_wrap -->';
+									include 'templates/html/modules-admin/id_hidden_wrap.php';
 										 
 									// input[type="submit"]
-									echo '<div class="submit_wrap">
-										 		<input type="submit" value="Изменить блок" name="submit">
-										 </div><!-- .submit_wrap -->';
+									include 'templates/html/modules-admin/submit_wrap.php';
 								?>
 
 				

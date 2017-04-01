@@ -51,22 +51,26 @@ body {
 }
 
 @media (max-width: 479px) {
-	.col-xs-100 {
+	.col-479-12 {
 		width: 100%;
 		float: none;
 		text-align: center;
 	}
 
-	.col-xs-50 {
+	.col-479-6 {
 		width: 50%;
 	}
 }
 
 @media (max-width: 380px) {
-	.col-xs-100-380 {
+	.col-380-12 {
 		width: 100%;
 		float: none;
 		text-align: center;
+	}
+
+	.col-380-6 {
+		width: 50%;
 	}
 }
 

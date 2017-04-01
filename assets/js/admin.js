@@ -1,33 +1,58 @@
 $(document).ready(function(){
 
-	var dropZone = document.querySelectorAll('div[class$="innerItem"]'),
-		$dropZone = $('div[class$="innerItem"]'),
-		maxFileSize = 1000000;
+	$('<div class="dropZone">Drop for download</div>').prependTo('div[class*="innerItem"]');
+	
+	$(document).on(
+		'dragover', '.dropZone', function(e) {
+			$(this).addClass('hover');
+			$(this).css({
+				'line-height': $(this).height() + 'px'
+			});
+		}
+	);
+	
+	$(document).on(
+		'dragleave', '.dropZone', function(e) {
+			$(this).removeClass('hover');
 
-	// if (typeof(window.FileReader) == 'undefined') {
-	// 	dropZone.addClass('error');
-	// }
-
-	for (var i = 0; i < dropZone.length; i++) {
-		dropZone[i].addEventListener("dragover", function(){
-			this.classList.add('hover');
-		});
-
-		dropZone[i].addEventListener("dragleave", function(){
-			this.classList.remove('hover');
-		});
-	}
+		}
+	);
+	
+	// $('div[class*="innerItem"]').bind({
+	// 	dragover: function(e) {
+	// 		if (e.target == this) {
+ //         			return;
+ //    		}
+	// 		$(this).addClass('hover');
+	// 	},
+	// 	dragleave: function(e) {
+	// 		if (e.target == this) {
+ //         			return;
+ //    		}
+	// 		$(this).removeClass('hover');
+	// 	}
+	// });
 	
 
-  // for (var i = 0; i < dropZone.length; i++) {
-  //   	dropZone[i].ondragover = function() {
-		// 	this.classList.add('hover');
-		// }
 
-		// dropZone[i].ondragleave = function() {
-		// 	this.classList.remove('hover');
-		// }
-  // }
+	// var $dropZone = $('div[class*="innerItem"]'); 
+  
+ //    $dropZone.bind({
+	// 	    dragover: function(e) {
+	// 	    	if (e.target == this) {
+ //         			return;
+ //    			}
+	// 		    $(this).addClass('hover');
+	// 	    },
+	// 	    dragleave: function(e) {
+	// 	    	if (e.target == this) {
+ //         			return;
+ //    			}
+	// 		    $(this).removeClass('hover');
+	// 	    }
+	// }); 
+
+
 
 
 

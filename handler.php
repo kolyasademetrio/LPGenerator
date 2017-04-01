@@ -1,5 +1,4 @@
 <?php
-
 include_once 'functions.php';
 
 $id = trim($_POST['id']);
@@ -10,7 +9,7 @@ $POST_arr = $_POST;
 unset($POST_arr['id']);
 unset($POST_arr['submit']);
 
-// myvardump($id);
+
 
 
 foreach ($POST_arr as $key_POST_arr => $value_POST_arr) {

@@ -16,6 +16,8 @@ include_once 'functions.php';
     <link rel="stylesheet" href="assets/plugins/flexslider/flexslider.css" type="text/css"/>
     <!-- magnific-popup -->
     <link rel="stylesheet" href="assets/plugins/magnific-popup/magnific-popup.css">
+   <!-- dropzone css -->
+    <!-- <link rel="stylesheet" href="assets/plugins/dropzone/dropzone.css"> -->
     <!-- fonts css -->
     <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="assets/css/admin.css">
