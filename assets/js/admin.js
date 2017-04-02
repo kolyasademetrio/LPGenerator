@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
-	$('<div class="dropZone">Drop for download</div>').prependTo('div[class*="innerItem"]');
+	$('<div class="drop__zone">Drop for download</div>').prependTo('div[class*="innerItem"]');
 	
 	$(document).on(
-		'dragover', '.dropZone', function(e) {
+		'dragover', '.drop__zone', function(e) {
 			e.preventDefault();
-			$(this).addClass('dropHover');
+			$(this).addClass('drop__hover');
 			$(this).css({
 				'line-height': $(this).height() + 'px'
 			});
@@ -16,9 +16,9 @@ $(document).ready(function(){
 			// }
 		}
 	).on(
-		'dragleave', '.dropZone', function(e) {
+		'dragleave', '.drop__zone', function(e) {
 			e.preventDefault();
-			$(this).removeClass('dropHover');
+			$(this).removeClass('drop__hover');
 
 			// if ($(this).hasClass('drop')) {
 			// 	$(this).removeClass('dropHover');
@@ -26,14 +26,29 @@ $(document).ready(function(){
 			// }
 		}
 	).on(
-		'drop', '.dropZone', function(e) {
-			e.preventDefault();
+		'drop', '.drop__zone', function(e) {
+			event.preventDefault();
     		// $(this).addClass('drop');
-			$(this).removeClass('dropHover');
+			$(this).removeClass('drop__hover');
 			// $(this).text('Dropped');
+			
+			// e.dataTransfer = e.originalEvent.dataTransfer;
+			// event.dataTransfer = event.originalEvent.dataTransfer;
+			
+			$.event.props.push('dataTransfer');
+
        		var files = event.dataTransfer.files;
 
        		loadInView(files);
+
+       		var xhr = new XMLHttpRequest();
+			$this = $(this);
+			xhr.upload.addEventListener('progress', uploadProgress.bind(null, $this), false);
+			//xhr.this = $(this);
+			// xhr.onreadystatechange = stateChange;
+			xhr.open('POST', '/handler.php');
+			xhr.setRequestHeader('X-FILE-NAME', files.name);
+			xhr.send(files);
 		}
 	);
 
@@ -97,30 +112,20 @@ $(document).ready(function(){
 		}
 	}
 
+	function uploadProgress($this, event) {
+	    var percent = parseInt(event.loaded / event.total * 100);
+	    $this.text('Загрузка: ' + percent + '%').addClass('download__result');
+	}
 
+	function stateChange(event) {
+	    if (event.target.readyState == 4) {
+	        if (event.target.status == 200) {
+	            dropZone.text('Загрузка успешно завершена!');
+	        } else {
+	            dropZone.text('Произошла ошибка!');
+	            dropZone.addClass('error');
+	        }
+	    }
+	}
 
-	// var xhr = new XMLHttpRequest();
-	// xhr.upload.addEventListener('progress', uploadProgress, false);
-	// xhr.onreadystatechange = stateChange;
-	// xhr.open('POST', '/handler.php');
-	// xhr.setRequestHeader('X-FILE-NAME', file.name);
-	// xhr.send(file);
-
-	// console.log(xhr);
-	
-	
-	$('div[class*="innerItem"]').bind({
-		dragover: function(e) {
-			if (e.target == this) {
-         			return;
-    		}
-			$(this).addClass('hover');
-		},
-		dragleave: function(e) {
-			if (e.target == this) {
-         			return;
-    		}
-			$(this).removeClass('hover');
-		}
-	});
 });

@@ -5,6 +5,7 @@ $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
 
+myvardump($POST);
 
 unset($POST_arr['id']);
 unset($POST_arr['submit']);
