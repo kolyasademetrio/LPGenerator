@@ -23,7 +23,7 @@
 	border: 2px dashed #369;
 }
 
-.hover {
+.dropHover {
 	opacity: 1;
 }
 
@@ -32,8 +32,8 @@
 // 	background-color: rgba(255, 0, 0, .5);
 // }
 
-// div[class*="innerItem"].drop:before {
-// 	content: "Error";
-// 	background-color: rgba(255, 0, 0, .5);
-// }
+.drop {
+	opacity: 1;
+	border-color: rgba(255, 0, 0, .5);
+}
 
