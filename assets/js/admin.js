@@ -27,7 +27,7 @@ $(document).ready(function(){
 		}
 	).on(
 		'drop', '.drop__zone', function(e) {
-			event.preventDefault();
+			e.preventDefault();
     		// $(this).addClass('drop');
 			$(this).removeClass('drop__hover');
 			// $(this).text('Dropped');
