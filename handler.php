@@ -5,7 +5,33 @@ $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
 
-myvardump($_FILES);
+if (!empty($_FILES)) {
+
+	$i = 1;
+	foreach ($_FILES as $files) {
+		if ($files['error'] == false) {
+
+			$uploaddir = getcwd() . DIRSEP . 'templates' . DIRSEP . 'images' . DIRSEP . $POST_arr['sect_name'] . DIRSEP;
+
+			$filename = $POST_arr['sect_name'] . '_' . $i . '.' . get_extension($files['name']);
+
+			if ( !is_dir($uploaddir) ) mkdir($uploaddir);
+
+			$uploadfile = $uploaddir . $filename;
+
+			move_uploaded_file($files['tmp_name'], $uploadfile);
+		}
+		
+		$i++;
+	}
+
+	// $uploaddir = getcwd().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR;
+	// $uploadfile = $uploaddir.basename($_FILES['col_image']['name']);
+
+	// move_uploaded_file($_FILES['col_image']['tmp_name'], $uploadfile);
+}
+
+
 
 unset($POST_arr['id']);
 unset($POST_arr['submit']);

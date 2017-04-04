@@ -1,5 +1,14 @@
 <div class="bootstrap_classes">
 <?php
+$select_options = array(
+		'col_lg'     => 'больше 1200',
+		'col_md'     => 'больше 992',
+		'col_sm'     => 'больше 768',
+		'col_xs_768' => 'меньше 768',
+		'col_xs_479' => 'меньше 479',
+		'col_xs_380' => 'меньше 380',
+	);
+
 foreach ($select_options as $attr_name => $lable_text) {
 ?>	
 	<div class="bootstrap_classes_item">

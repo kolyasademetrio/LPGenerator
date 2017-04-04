@@ -4,6 +4,7 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 define('FILEEXTENSION_PHP', 'php');
 define('FILEEXTENSION_CSS', 'css');
 define('FILEEXTENSION_HTML', 'html');
+define('DIRSEP', DIRECTORY_SEPARATOR);
 
 
 /**
@@ -71,7 +72,7 @@ function load_stylesheets( $dir_name ) {
 
 	foreach ($files as $file_name) {
 
-		$file_path = $dir_name . '/' . $file_name;
+		$file_path = $dir_name . DIRSEP . $file_name;
 
 		if ( file_exists($file_path) ) {
 			echo '<link rel="stylesheet" href="' . $file_path . '">';
@@ -164,7 +165,7 @@ function generate_output_files($source_dir, $output_dir, $source_file_extension,
 
 	foreach($files_source_array as $file_name) {
 
-		$file_path = ROOT . '/' . $source_dir . '/' . $file_name;
+		$file_path = ROOT . DIRSEP . $source_dir . DIRSEP . $file_name;
 
 		if ( is_dir($file_path) ) {
 			array_map('unlink', glob("$file_path/*.*"));
@@ -180,7 +181,7 @@ function generate_output_files($source_dir, $output_dir, $source_file_extension,
 
 			$file_content = include $file_path;
 
-			$file_output_path = $output_dir . '/' . $name . '.' . $output_file_extension; // вынести расширение в параметры
+			$file_output_path = $output_dir . DIRSEP . $name . '.' . $output_file_extension; // вынести расширение в параметры
 
 			$handle = fopen($file_output_path , 'w');
 			fwrite($handle, $file_content);
@@ -200,7 +201,7 @@ function generate_output_files($source_dir, $output_dir, $source_file_extension,
 	$array_diff = array_diff($files_output_array, $files_source_array);// разница массивов
 
 	foreach ($array_diff as $file_to_delete) {
-		$file_to_delete_path = $output_dir . '/' . $file_to_delete;
+		$file_to_delete_path = $output_dir . DIRSEP . $file_to_delete;
 		unlink($file_to_delete_path);
 	}
 
@@ -223,27 +224,16 @@ function include_files($dir_name) {
 
 	$id = 1;// $id строки таблицы sections
 
-	$select_options = array(
-		'col_lg'     => 'больше 1200',
-		'col_md'     => 'больше 992',
-		'col_sm'     => 'больше 768',
-		'col_xs_768' => 'меньше 768',
-		'col_xs_479' => 'меньше 479',
-		'col_xs_380' => 'меньше 380',
-	);
-
-
-
 	foreach ($files as $file_name) {
 
 		$global_arr = 'tmpl_' . $id;
 
 		global ${$global_arr};
 
-		$file_path = ROOT . '/' . $dir_name . '/' . $file_name;
+		$file_path = ROOT . DIRSEP . $dir_name . DIRSEP . $file_name;
 
 		if ( file_exists($file_path) ) {
-			echo '<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">';
+			echo '<form name="block_edit_' . $id . '" method="post" action="handler.php" enctype="multipart/form-data">';
 			include $file_path;// вывод скомпилированного .html
 			?>
 			<div class="container">
@@ -255,16 +245,18 @@ function include_files($dir_name) {
 
 								<?php
 
-									// var_dump(${$global_arr});
+									if (isset(${$global_arr}['count_col'])) {
 
 									// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
 									echo '<div class="inputs_image_download_wrap row">';
-										  for ($i = 0; $i < ${$global_arr}['count_col']; $i++) {
-										  	 echo '<div class="col-xs-' . ${$global_arr}['col_lg'] . '">
-										  	 			<input type="file" name="col_image">
+										  for ($i = 0, $y = 1; $i < ${$global_arr}['count_col']; $i++,$y++) {
+										  	 echo '<div class="col-xs-' . ${$global_arr}['col_lg'] . ' input_file_type">
+										  	 			<input type="file" name="col_image_' . $y . '">
 									  	 		   </div>';
 										  }
 									echo '</div>';
+
+									}
 
 									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
 									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
@@ -298,6 +290,9 @@ function include_files($dir_name) {
 
 									// Кол-во колонок для разрешения
 									include 'templates/html/modules-admin/bootstrap_classes.php';
+
+									// input[class="section_name_hidden_wrap"]
+									include 'templates/html/modules-admin/section_name_hidden_wrap.php';
 
 									// input[class="id_hidden_wrap"]
 									include 'templates/html/modules-admin/id_hidden_wrap.php';

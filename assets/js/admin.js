@@ -28,11 +28,8 @@ $(document).ready(function(){
 		'drop', '.drop__zone', function(e) {
 			e.preventDefault();
 			
-    		// $(this).addClass('drop');
 			$(this).removeClass('drop__hover');
-			// $(this).text('Dropped');
 			
-			// e.dataTransfer = e.originalEvent.dataTransfer;
 			e.dataTransfer = e.originalEvent.dataTransfer;
 			
 			// $.event.props.push('dataTransfer');
@@ -43,14 +40,16 @@ $(document).ready(function(){
    //     		var xhr = new XMLHttpRequest();
 			// $this = $(this);
 			// xhr.upload.addEventListener('progress', uploadProgress.bind(null, $this), false);
-			// //xhr.this = $(this);
-			// xhr.onreadystatechange = stateChange;
-			// xhr.open('POST', '/handler.php');
+
+			// xhr.open('POST', 'handler.php');
 			// xhr.setRequestHeader('X-FILE-NAME', files.name);
 			// xhr.send(files);
-			// console.log(xhr);
 
-			$(this).parent('.container').next('.container').find("input[type='file']").prop("files", e.originalEvent.dataTransfer.files).closest("form").submit();
+			var parentIndex = $(this).parent().index();
+
+			$(this).parents('.container').parent().next('.container').find('.input_file_type').eq(parentIndex).find("input[type='file']").prop("files", e.originalEvent.dataTransfer.files);
+
+			// $(this).parents('.container').parent().next('.container').find("input[type='file']").prop("files", e.originalEvent.dataTransfer.files).closest("form").submit();
 		}
 	);
 
