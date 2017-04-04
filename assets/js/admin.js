@@ -19,7 +19,6 @@ $(document).ready(function(){
 		'dragleave', '.drop__zone', function(e) {
 			e.preventDefault();
 			$(this).removeClass('drop__hover');
-
 			// if ($(this).hasClass('drop')) {
 			// 	$(this).removeClass('dropHover');
 			// 	$(this).text('Dropped');
@@ -28,18 +27,18 @@ $(document).ready(function(){
 	).on(
 		'drop', '.drop__zone', function(e) {
 			e.preventDefault();
+			
     		// $(this).addClass('drop');
 			$(this).removeClass('drop__hover');
 			// $(this).text('Dropped');
 			
 			// e.dataTransfer = e.originalEvent.dataTransfer;
-			// event.dataTransfer = event.originalEvent.dataTransfer;
+			e.dataTransfer = e.originalEvent.dataTransfer;
 			
-			$.event.props.push('dataTransfer');
+			// $.event.props.push('dataTransfer');
+       		var files = e.dataTransfer.files;
 
-       		var files = event.dataTransfer.files;
-
-       		loadInView(files);
+       		loadInView(e,files);
 
        		var xhr = new XMLHttpRequest();
 			$this = $(this);
@@ -60,9 +59,11 @@ $(document).ready(function(){
 
 
 	// Функция загрузки изображений на предпросмотр
-   function loadInView(files) {
-      // Для каждого файла
+   function loadInView(event, files) {
+
+      	// Для каждого файла
 		$.each(files, function(index, file) {
+
 			if (files[index].type.match('image.*')) {
 
 	            var eventTarget = event.target;
