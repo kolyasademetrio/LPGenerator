@@ -40,14 +40,17 @@ $(document).ready(function(){
 
        		loadInView(e,files);
 
-       		var xhr = new XMLHttpRequest();
-			$this = $(this);
-			xhr.upload.addEventListener('progress', uploadProgress.bind(null, $this), false);
-			//xhr.this = $(this);
+   //     		var xhr = new XMLHttpRequest();
+			// $this = $(this);
+			// xhr.upload.addEventListener('progress', uploadProgress.bind(null, $this), false);
+			// //xhr.this = $(this);
 			// xhr.onreadystatechange = stateChange;
-			xhr.open('POST', '/handler.php');
-			xhr.setRequestHeader('X-FILE-NAME', files.name);
-			xhr.send(files);
+			// xhr.open('POST', '/handler.php');
+			// xhr.setRequestHeader('X-FILE-NAME', files.name);
+			// xhr.send(files);
+			// console.log(xhr);
+
+			$(this).parent('.container').next('.container').find("input[type='file']").prop("files", e.originalEvent.dataTransfer.files).closest("form").submit();
 		}
 	);
 
@@ -119,6 +122,7 @@ $(document).ready(function(){
 	}
 
 	function stateChange(event) {
+		// console.log(event.target.readyState);
 	    if (event.target.readyState == 4) {
 	        if (event.target.status == 200) {
 	            dropZone.text('Загрузка успешно завершена!');

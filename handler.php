@@ -5,7 +5,7 @@ $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
 
-myvardump($POST);
+myvardump($_FILES);
 
 unset($POST_arr['id']);
 unset($POST_arr['submit']);
