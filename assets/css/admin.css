@@ -1,10 +1,4 @@
-
-// div[class$="innerItem"]
-
-// div[class*="innerItem"] {
-	
-// }
-
+/* ------------------------>>> drop__zone <<<----------------------------------------------------- */
 .drop__zone {
 	opacity: 0;
 	position: absolute;
@@ -55,4 +49,41 @@
 	background-color: rgba(255, 255, 255, .9);
 	color: #313131;
 }
+/* ------------------------>>> drop__zone End <<<------------------------------------------------- */
 
+
+
+/* ------------------------>>> section_name_form <<<----------------------------------------------------- */
+.section_name_btn_wrap {
+	padding: 10px 0 30px;
+}
+
+.section_name_hide_btn {
+	display: inline-block;
+	padding: 10px 15px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	color: #fff;
+	background: #369bce;
+	text-align: center;
+	font-family: "RobotoRegular";
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	width: 280px;
+}
+
+.section_name_hide_btn:hover,
+.section_name_hide_btn:focus {
+	color: #fff;
+}
+
+.section_name_input_wrap {
+	padding: 10px 0 30px;
+	display: none;
+}
+
+
+/* ------------------------>>> section_name_form End <<<------------------------------------------------- */

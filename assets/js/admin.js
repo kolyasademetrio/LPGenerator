@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
 	$('<div class="drop__zone">Drop for download</div>').prependTo('div[class*="innerItem"]');
 	
 	$(document).on(
@@ -132,4 +134,15 @@ $(document).ready(function(){
 	    }
 	}
 
-});
+	// скрыть-показать поле input[type="text"][name="section_name"]
+	var toggled = true;
+	$('.section_name_hide_btn').on('click', function(e){
+		e.preventDefault();
+		
+		$('.section_name_input_wrap').slideToggle();
+		$(this).text(toggled ? 'Скрыть дополнительное поле' : 'Показать дополнительное поле');
+		toggled = !toggled;
+	});
+
+
+});/* $(document).ready(function(){ End */
