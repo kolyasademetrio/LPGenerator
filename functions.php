@@ -255,7 +255,7 @@ function include_files($dir_name) {
 								echo '<div class="inputs_image_download_wrap row">';
 									  for ($i = 0, $y = 1; $i < ${$global_arr}['count_col']; $i++,$y++) {
 									  	 echo '<div class="col-xs-' . ${$global_arr}['col_lg'] . ' input_file_type">
-									  	 			<input type="file" name="col_image_' . $y . '">
+									  	 			<input type="file" name="col_image_' . $y . '" id="' . ${$global_arr}['sect_name'] . '_' . $y . '">
 								  	 		   </div>';
 									  }
 								echo '</div>';

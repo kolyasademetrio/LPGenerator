@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
 
-
-	$('<div class="drop__zone">Drop for download</div>').prependTo('div[class*="innerItem"]');
+// сделать проверку на наличие картинки внутри!!!!!!!!!!!!!!!!!!!!!!!!++атрибут for для каждого input
+	$('<label for="sect_1" class="drop__zone">Drop for download</label>').prependTo('div[class*="innerItem"]');
 	
 	$(document).on(
 		'dragover', '.drop__zone', function(e) {
