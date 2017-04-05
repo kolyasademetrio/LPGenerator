@@ -1,42 +1,14 @@
 $(document).ready(function(){
 
-
-// сделать проверку на наличие картинки внутри!!!!!!!!!!!!!!!!!!!!!!!!++атрибут for для каждого input
-	// $('<label for="sect_1" class="drop__zone">Drop for download</label>').prependTo('div[class*="innerItem"]');
-	
-
-
-
-$('.container').each(function(){
-	var className = $(this).parent().attr('class');
-	if ($(this).find('img').length > 0) {
-		$(this).find('div[class*="innerItem"]').each(function(index, elem){
-			var attrFor = className + '_' + ++index;
-			$('<label for="' + attrFor + '" class="drop__zone">Drop for download</label>').prependTo(elem);
-		});
-	}
-});
-
-
-
-
-
-
-
-
-
-	// var count = 1;
-	// $('div[class*="innerItem"]').each(function(){
-	// 	var img = $(this).find('img');
-
-	// 	if(img.length > 0){
-
-	// 		$('<label for="partners_' + count + '" class="drop__zone">Drop for download</label>').prependTo( $(this) );
-
-	// 	}
-
-	// 	count++;
-	// })
+	$('.container').each(function(){
+		var className = $(this).parent().attr('class');
+		if ($(this).find('img').length > 0) {
+			$(this).find('div[class*="innerItem"]').each(function(index, elem){
+				var attrFor = className + '_' + ++index;
+				$('<label for="' + attrFor + '" class="drop__zone">Drop for download</label>').prependTo(elem);
+			});
+		}
+	});
 
 	$(document).on(
 		'dragover', '.drop__zone', function(e) {

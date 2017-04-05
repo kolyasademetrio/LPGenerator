@@ -30,7 +30,7 @@ $col_xs_768 = $db->get_val('col_xs_768', $tmpl_id, 3, 'html_content');// одн�
 $col_xs_479 = $db->get_val('col_xs_479', $tmpl_id, 3, 'html_content');// одно из .. значений
 $col_xs_380 = $db->get_val('col_xs_380', $tmpl_id, 3, 'html_content');// одно из .. значений
 
-
+// Создаёт глобальный массив со всеми переданными переменными
 create_array($tmpl_id, 'title', 'section_name', array('count_col' => $count_col, 'col_lg' => $col_lg, 'sect_name' => $section_name));
 
 
