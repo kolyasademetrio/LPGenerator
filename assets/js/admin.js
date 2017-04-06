@@ -4,7 +4,7 @@ $(document).ready(function(){
 		var className = $(this).parent().attr('class');
 		if ($(this).find('img').length > 0) {
 			$(this).find('div[class*="innerItem"]').each(function(index, elem){
-				var attrFor = className + '_' + ++index;
+				var attrFor = 'input_type_file_' + className + '_' + ++index;
 				$('<label for="' + attrFor + '" class="drop__zone">Drop for download</label>').prependTo(elem);
 			});
 		}

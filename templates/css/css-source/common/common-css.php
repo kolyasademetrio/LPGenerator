@@ -8,8 +8,17 @@ $tmpl_id = 'common_css';
 
 $container_max_width = $db->get_val('container_max_width', $tmpl_id, 1030, 'css_common');
 
+/**
+ * Создаёт глобальный массив со всеми переданными переменными
+ * @param первый - id-шаблона
+ * @param второй - массив для вывода в админку input[type="text"]
+ * @param третий - массив для вывода в глобальную область видимости
+ */
 create_array($tmpl_id, array(
 								'container_max_width'
+							),
+						array(
+								// 'var_test' => 'var_test_value'
 							));
 
 

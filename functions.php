@@ -110,9 +110,13 @@ function clean_dots_scandir ($dir_path) {
  * имя массива образуется как 'tmpl_' . $id, например: $tmpl_1 или $tmpl_common
  * выходной массив имеет вид: $tmpl_common_css = array('id' => 'common_css', '$width' => 'width');
  * выходной массив имеет вид: $tmpl_1 = array('id' => 1, '$width' => 'width');
- * @param string передаются параметры, где первый - $id, остальные - добавляются в глобальный массив
+ * @param string $id, первый параметр - добавляются в глобальный массив
+ * @param array('value',
+ *        		'value') все элементы которые надо вывести в админку как input[type="text"] - добавляются в глобальный массив
+ * @param array('key' => 'value',
+ *              'key' => 'value') все элементы которые надо добавить в глобальную область видимости - добавляются в глобальный массив
  */
-function create_array($id) {
+function create_array() {
 
 	$args = func_get_args();
 
@@ -124,16 +128,11 @@ function create_array($id) {
 
 	${$arrayName}['id'] = array_shift($args);
 
-	// echo '<pre>$args - ';
-	// var_dump(${$arrayName}['id']);
-	// echo '</pre><br>';
-
 	if (is_array($args[0]) && $args[0] !== NULL) {
 		foreach ($args[0] as $key => $value) {
 			${$arrayName}['$' . $value] = $value;
 		}
 	}
-
 
 	if (is_array($args[1]) && $args[1] !== NULL) {
 		foreach ($args[1] as $key => $value) {
@@ -141,35 +140,17 @@ function create_array($id) {
 		}
 	}
 
-	
-
-	// for ($i = 0; $i < count($args)) {
-
-	// }
-
-
-
 	// for ($i = 0; $i < count($args); $i++) {
 	// 	if ( !is_array($args[$i]) ) {
-
 	// 		if ($i > 0) {
-
 	// 			${$arrayName}['$' . $args[$i]] = $args[$i];
-
 	// 		} else {
-
 	// 			${$arrayName}['id'] = $args[$i];
-
 	// 		}
-
 	// 	} else {
-
 	// 		foreach ($args[$i] as $key => $value) {
-
 	// 			${$arrayName}[$key] = $value;
-
 	// 		}
-
 	// 	}
 	// }
 }
@@ -275,39 +256,25 @@ function include_files($dir_name) {
 							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
 								<div class="inputs__wraper">
 								<?php
-	
-								if (isset(${$global_arr}['count_col'])) {
-
 								// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
-								echo '<div class="inputs_image_download_wrap row">';
-									  for ($i = 0, $y = 1; $i < ${$global_arr}['count_col']; $i++,$y++) {
-									  	 echo '<div class="col-xs-' . ${$global_arr}['col_lg'] . ' input_file_type">
-									  	 			<input type="file" name="col_image_' . $y . '" id="' . ${$global_arr}['sect_name'] . '_' . $y . '">
-								  	 		   </div>';
-									  }
-								echo '</div>';
-
+								if (isset(${$global_arr}['count_col']) && ${$global_arr}['if_col_has_img_to_download'] === true) {
+									include 'templates/html/modules-admin/inputs_type_file.php';
 								}
 
 								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
 								// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
-								// из перебора исключаются ключи id и count_col
+								// если первый символ в $key это $, то выводим input[type="text"]
 								foreach (${$global_arr} as $key => $value) {
-
-									// if ($key == 'id' || $key == 'count_col' || $key == '$section_name' || strpos($key,'col_lg') === 0) continue;
-									if ($key == 'id' || strpos($key, '$') === false || strpos($key,'col_lg') === 0) continue;
-									// if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg') === 0) continue;
-
-									echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+									if (strpos($key, '$') === 0 ) {
+										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+									}
 								}
 
 								// Положение заголовка блока
 								include 'templates/html/modules-admin/title_text_center.php';
 
-
 								// Заглавные/прописные буквы заголовка блока
 								include 'templates/html/modules-admin/title_text_uppercase.php';
-
 
 								// Выбрать блок ???????????????? не подключен но выведен в index.php
 								echo '<div class="block_changed">
@@ -317,13 +284,14 @@ function include_files($dir_name) {
 									   </div><!-- .block_changed -->';
 
 								// Количество блоков
-								include 'templates/html/modules-admin/bootstrap_col_qty.php';
+								if (isset(${$global_arr}['count_col'])) {
+									include 'templates/html/modules-admin/bootstrap_col_qty.php';
+								}
 
 								// Кол-во колонок для разрешения
-								include 'templates/html/modules-admin/bootstrap_classes.php';
-
-								// input[class="section_name_hidden_wrap"]
-								include 'templates/html/modules-admin/section_name_hidden_wrap.php';
+								if (isset(${$global_arr}['count_col'])) {
+									include 'templates/html/modules-admin/bootstrap_classes.php';
+								}
 
 								// input[class="id_hidden_wrap"]
 								include 'templates/html/modules-admin/id_hidden_wrap.php';

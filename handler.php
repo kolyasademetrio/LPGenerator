@@ -6,6 +6,23 @@ $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
 
+if ( !empty($_POST['section_name']) ) {
+	$db = new Database();
+	$new_section_name = trim($_POST['section_name']);
+	$old_section_name = $db->get_val('section_name', $id, 'default', 'html_content');
+
+	if ($new_section_name != $old_section_name) {
+		echo 'Trying to change the class of the wrapper!';
+		die();
+	}
+
+	// echo '$new_section_name - ' . $new_section_name . '<br>';
+	// echo '$old_section_name - ' . $old_section_name . '<br>';
+	
+}
+
+
+
 if (!empty($_FILES)) {
 	// echo '<pre>';
 	// var_dump($_POST);
@@ -15,13 +32,15 @@ if (!empty($_FILES)) {
 	$i = 1;
 	foreach ($_FILES as $files) {
 		if ($files['error'] == false) {
-			$db = new Database();
-			$new_sect_name = trim($_POST['sect_name']);
-			$old_sect_name = $db->get_val('section_name', $_POST['id'], 'default', 'html_content');
 
-			echo $new_sect_name . '<br>';
-			echo $old_sect_name . '<br>';
-			die();
+
+			// $db = new Database();
+			// $new_sect_name = trim($_POST['section_name']);
+			// $old_sect_name = $db->get_val('section_name', $_POST['id'], 'default', 'html_content');
+
+			// echo '$new_sect_name - ' . $new_sect_name . '<br>';
+			// echo '$old_sect_name - ' . $old_sect_name . '<br>';
+			// die();
 
 
 			$uploaddir = getcwd() . DIRSEP . 'templates' . DIRSEP . 'images' . DIRSEP . $POST_arr['sect_name'] . DIRSEP;
@@ -80,9 +99,3 @@ $db->update_tablecell_value($POST_arr, $id);
 
 header('Location: index.php#' . $id);
 exit;
-
-
- 
-
-
-

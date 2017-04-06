@@ -20,10 +20,12 @@ $section_padding_top = $db->get_val('section_padding_top', $tmpl_id, 47, 'css_co
 $section_padding_bottom = $db->get_val('section_padding_bottom', $tmpl_id, 47, 'css_content');
 $border_width = $db->get_val('border_width', $tmpl_id, 10, 'css_content');
 
-// создаем массив всех параметров для секции с id=1 (здесь $tmpl_id = $id = 1)
-// первый параметр - id шаблона
-// остальные параметры вне массива - input[type="text"] для добавления в админку(в формате '$var' = 'var')
-// параметры в массиве передают значения в глобальный массив
+/**
+ * Создаёт глобальный массив со всеми переданными переменными
+ * @param первый - id-шаблона
+ * @param второй - массив для вывода в админку input[type="text"]
+ * @param третий - массив для вывода в глобальную область видимости
+ */
 create_array($tmpl_id, array(
 								'section_name',
 								'section_padding_top',
@@ -32,7 +34,7 @@ create_array($tmpl_id, array(
 							),
 				
 						array(
-								'var_test' => 'var_test_value'
+								// 'var_test' => 'var_test_value'
 							));
 
 // echo $section_padding
