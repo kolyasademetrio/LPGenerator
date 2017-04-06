@@ -243,7 +243,7 @@ function include_files($dir_name) {
 							<?php
 							// .section_name_form первоначально скрытая отдельная форма с полем для изменения
 							// класса основного контейнера секции
-							include 'templates/html/modules-admin/section_name_form.php';
+							// include 'templates/html/modules-admin/section_name_form.php';
 							?>
 							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
 								<div class="inputs__wraper">
@@ -267,7 +267,8 @@ function include_files($dir_name) {
 								// из перебора исключаются ключи id и count_col
 								foreach (${$global_arr} as $key => $value) {
 
-									if ($key == 'id' || $key == 'count_col' || $key == '$section_name' || strpos($key,'col_lg') === 0) continue;
+									// if ($key == 'id' || $key == 'count_col' || $key == '$section_name' || strpos($key,'col_lg') === 0) continue;
+									if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg') === 0) continue;
 
 									echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 								}

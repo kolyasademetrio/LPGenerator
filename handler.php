@@ -1,15 +1,28 @@
 <?php
 include_once 'functions.php';
+// include_once 'model/Database.php';
 
 $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
 
 if (!empty($_FILES)) {
+	// echo '<pre>';
+	// var_dump($_POST);
+	// echo '</pre>';
+	// myvardump($_FILES);
 
 	$i = 1;
 	foreach ($_FILES as $files) {
 		if ($files['error'] == false) {
+			$db = new Database();
+			$new_sect_name = trim($_POST['sect_name']);
+			$old_sect_name = $db->get_val('section_name', $_POST['id'], 'default', 'html_content');
+
+			echo $new_sect_name . '<br>';
+			echo $old_sect_name . '<br>';
+			die();
+
 
 			$uploaddir = getcwd() . DIRSEP . 'templates' . DIRSEP . 'images' . DIRSEP . $POST_arr['sect_name'] . DIRSEP;
 

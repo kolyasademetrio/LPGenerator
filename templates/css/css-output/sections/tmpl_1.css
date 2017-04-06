@@ -1,11 +1,11 @@
-/* ------------------------>>> sect <<<----------------------------------------------------- */
-.sect {
+/* ------------------------>>> new_sect <<<----------------------------------------------------- */
+.new_sect {
 	padding: 20px 0 40px;
 	background-color: #fff;
 	border-bottom:100px solid #30bced;
 }
 
-.sect__title {
+.new_sect__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
@@ -15,48 +15,48 @@
 	margin: 0 0 55px;
 }
 
-.sect__container {
+.new_sect__container {
 	max-width: 1006px;
 }
 
-.sect__container,
-.sect__innerItem {
+.new_sect__container,
+.new_sect__innerItem {
 	padding-left: 3px;
 	padding-right: 3px;
 }
 
-.sect__row {
+.new_sect__row {
 	margin-left: -3px;
 	margin-right: -3px;
 }
 
-.sect__innerItem {
+.new_sect__innerItem {
 	margin-bottom: 6px;
 }
 
-.sect__item {
+.new_sect__item {
 	background-color: #e0e0e0;
 	height: 56px;
 	line-height: 56px;
 }
 
-.sect__img {
+.new_sect__img {
 	display: inline-block;
 	vertical-align: middle;
 }
 
 @media ( max-width: 768px ) {
 
-	.sect__container {
+	.new_sect__container {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
 
-	.sect {
+	.new_sect {
 		padding: 30px 0 30px;
 	}
 
-	.sect__title {
+	.new_sect__title {
 		margin-bottom: 30px;
 		font-size: 20px;
 	}
@@ -64,4 +64,4 @@
 }
 
 
-/* ------------------------>>> sect End <<<------------------------------------------------- */
+/* ------------------------>>> new_sect End <<<------------------------------------------------- */
