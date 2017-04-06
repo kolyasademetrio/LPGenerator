@@ -13,7 +13,12 @@ $section_padding_bottom = $db->get_val('section_padding_bottom', $tmpl_id, 47, '
 $border_width = $db->get_val('border_width', $tmpl_id, 10, 'css_content');
 
 // Создаёт глобальный массив со всеми переданными переменными
-create_array($tmpl_id, 'section_name', 'section_padding_top', 'section_padding_bottom', 'border_width');
+create_array($tmpl_id, array(
+								'section_name',
+								'section_padding_top',
+								'section_padding_bottom',
+								'border_width'
+							));
 
 
 $styles = '/* ------------------------>>> ' . $section_name . ' <<<----------------------------------------------------- */

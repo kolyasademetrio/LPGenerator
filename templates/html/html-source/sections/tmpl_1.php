@@ -31,7 +31,16 @@ $col_xs_479 = $db->get_val('col_xs_479', $tmpl_id, 3, 'html_content');// одн�
 $col_xs_380 = $db->get_val('col_xs_380', $tmpl_id, 3, 'html_content');// одно из .. значений
 
 // Создаёт глобальный массив со всеми переданными переменными
-create_array($tmpl_id, 'title', 'section_name', array('count_col' => $count_col, 'col_lg' => $col_lg, 'sect_name' => $section_name));
+create_array($tmpl_id, array(
+                                'title',
+                                'section_name'
+                            ),
+
+                       array(
+                                'count_col' => $count_col,
+                                'col_lg'    => $col_lg,
+                                'sect_name' => $section_name
+                            ));
 
 
 // <div class="' . $section_name . '" id="' . $tmpl_id . '"> передаем id=......$tmpl_id для переадресации к тому же экрану с которого был отправлен запрос

@@ -112,7 +112,7 @@ function clean_dots_scandir ($dir_path) {
  * выходной массив имеет вид: $tmpl_1 = array('id' => 1, '$width' => 'width');
  * @param string передаются параметры, где первый - $id, остальные - добавляются в глобальный массив
  */
-function create_array() {
+function create_array($id) {
 
 	$args = func_get_args();
 
@@ -122,29 +122,56 @@ function create_array() {
 
 	global ${$arrayName};
 
-	for ($i = 0; $i < count($args); $i++) {
-		if ( !is_array($args[$i]) ) {
+	${$arrayName}['id'] = array_shift($args);
 
-			if ($i > 0) {
+	// echo '<pre>$args - ';
+	// var_dump(${$arrayName}['id']);
+	// echo '</pre><br>';
 
-				${$arrayName}['$' . $args[$i]] = $args[$i];
-
-			} else {
-
-				${$arrayName}['id'] = $args[$i];
-
-			}
-
-		} else {
-
-			foreach ($args[$i] as $key => $value) {
-
-				${$arrayName}[$key] = $value;
-
-			}
-
+	if (is_array($args[0]) && $args[0] !== NULL) {
+		foreach ($args[0] as $key => $value) {
+			${$arrayName}['$' . $value] = $value;
 		}
 	}
+
+
+	if (is_array($args[1]) && $args[1] !== NULL) {
+		foreach ($args[1] as $key => $value) {
+			${$arrayName}[$key] = $value;
+		}
+	}
+
+	
+
+	// for ($i = 0; $i < count($args)) {
+
+	// }
+
+
+
+	// for ($i = 0; $i < count($args); $i++) {
+	// 	if ( !is_array($args[$i]) ) {
+
+	// 		if ($i > 0) {
+
+	// 			${$arrayName}['$' . $args[$i]] = $args[$i];
+
+	// 		} else {
+
+	// 			${$arrayName}['id'] = $args[$i];
+
+	// 		}
+
+	// 	} else {
+
+	// 		foreach ($args[$i] as $key => $value) {
+
+	// 			${$arrayName}[$key] = $value;
+
+	// 		}
+
+	// 	}
+	// }
 }
 
 
@@ -268,7 +295,8 @@ function include_files($dir_name) {
 								foreach (${$global_arr} as $key => $value) {
 
 									// if ($key == 'id' || $key == 'count_col' || $key == '$section_name' || strpos($key,'col_lg') === 0) continue;
-									if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg') === 0) continue;
+									if ($key == 'id' || strpos($key, '$') === false || strpos($key,'col_lg') === 0) continue;
+									// if ($key == 'id' || $key == 'count_col' || strpos($key,'col_lg') === 0) continue;
 
 									echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 								}

@@ -10,7 +10,10 @@ $title        = $db->get_val('title', $tmpl_id, 'Section title', 'html_content')
 $section_name = $db->get_val('section_name', $tmpl_id, 'section_1', 'html_content');
 
 // Создаёт глобальный массив со всеми переданными переменными
-create_array($tmpl_id, 'title', 'section_name');
+create_array($tmpl_id, array(
+                                'title',
+                                'section_name'
+                            ));
 
 // переменные без добавления в глобальный массив
 $title_text_center = $db->get_val('title_text_center', $tmpl_id, 'text-center', 'html_content');// одно из трёх значений

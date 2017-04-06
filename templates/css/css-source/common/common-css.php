@@ -8,7 +8,9 @@ $tmpl_id = 'common_css';
 
 $container_max_width = $db->get_val('container_max_width', $tmpl_id, 1030, 'css_common');
 
-create_array($tmpl_id, 'container_max_width');
+create_array($tmpl_id, array(
+								'container_max_width'
+							));
 
 
 $styles = '/*common styles*/

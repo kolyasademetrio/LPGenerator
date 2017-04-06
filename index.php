@@ -10,7 +10,12 @@ include_files('templates/html/html-output/sections');
 
 
 
-
+echo '<pre>';
+var_dump($GLOBALS);
+echo '</pre>';
+echo '<pre>';
+echo '<pre>';
+echo '<pre>';
 
 
 
