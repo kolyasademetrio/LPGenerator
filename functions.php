@@ -261,20 +261,41 @@ function include_files($dir_name) {
 									include 'templates/html/modules-admin/inputs_type_file.php';
 								}
 
-								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне
+								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне кроме полей для ЗАГОЛОВКА
 								// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
-								// если первый символ в $key это $, то выводим input[type="text"]
+								// если первый символ в $key это $, то выводим input[type="text"] и
+								// если в начале ключа массива есть '$title', то пропускаем эти ключи(выводим их позже в отдельный блок для всего что касается Заголовка)
 								foreach (${$global_arr} as $key => $value) {
-									if (strpos($key, '$') === 0 ) {
+									if (strpos($key, '$') === 0) {
+										if (strpos($key, '$title') === 0) continue;
 										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 									}
 								}
 
-								// Положение заголовка блока
-								include 'templates/html/modules-admin/title_text_center.php';
+								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне для ЗАГОЛОВКА
+								// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
+								// если первый символ в $key это $, то выводим input[type="text"] и 
+								// если в начале ключа массива есть '$title', то выводим input[type="text"] для этих ключей
+								if (isset(${$global_arr}['$title'])) {
+									echo '<div class=title-edit-wrap>';
+									foreach (${$global_arr} as $key => $value) {
+										if (strpos($key, '$title') === 0) {
+											echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+										}
+									}
 
-								// Заглавные/прописные буквы заголовка блока
-								include 'templates/html/modules-admin/title_text_uppercase.php';
+									// Положение заголовка блока
+									include 'templates/html/modules-admin/title_text_center.php';
+
+									// Заглавные/прописные буквы заголовка блока
+									include 'templates/html/modules-admin/title_text_uppercase.php';
+
+									
+
+									echo '</div>';
+								}
+
+								
 
 								// Выбрать блок ???????????????? не подключен но выведен в index.php
 								echo '<div class="block_changed">

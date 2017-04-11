@@ -10,7 +10,7 @@ $section_name = $db->get_val('section_name', $tmpl_id, 'section', 'html_content'
 
 $section_padding_top = $db->get_val('section_padding_top', $tmpl_id, 47, 'css_content');
 $section_padding_bottom = $db->get_val('section_padding_bottom', $tmpl_id, 47, 'css_content');
-$border_width = $db->get_val('border_width', $tmpl_id, 10, 'css_content');
+$title_font_size = $db->get_val('title_font_size', $tmpl_id, 25, 'css_content');
 
 /**
  * Создаёт глобальный массив со всеми переданными переменными
@@ -22,7 +22,7 @@ create_array($tmpl_id, array(
 								'section_name',
 								'section_padding_top',
 								'section_padding_bottom',
-								'border_width'
+								'title_font_size',//  - всё что относится к заголовку имеет в начале "title"
 							),
 						array(
 								// 'var_test' => 'var_test_value'
@@ -34,14 +34,13 @@ $styles = '/* ------------------------>>> ' . $section_name . ' <<<-------------
 	padding: ' . $section_padding_top . 'px 0 ' . $section_padding_bottom . 'px;
 	background: #fff url(../img/' . $section_name . '/bg/bg_' . $section_name . '.jpg) center 0 no-repeat;
 	background-size: cover;
-	border-bottom: ' . $border_width . 'px solid #369;
 }
 
 .' . $section_name . '__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
-	font-size: 23px;
+	font-size: ' . $title_font_size . 'px;
 	color: #565a65;
 
 	margin: 0 0 55px;

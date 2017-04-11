@@ -5,7 +5,8 @@ $(document).ready(function(){
 		if ($(this).find('img').length > 0) {
 			$(this).find('div[class*="innerItem"]').each(function(index, elem){
 				var attrFor = 'input_type_file_' + className + '_' + ++index;
-				$('<label for="' + attrFor + '" class="drop__zone">Drop for download</label>').prependTo(elem);
+				$(elem).find('img').parent().prepend('<label for="' + attrFor + '" class="drop__zone">Drop for download</label>');
+				$(elem).find('img').parent().css({'position':'relative'});
 			});
 		}
 	});
