@@ -23,8 +23,8 @@ if ( !empty($_POST['section_name']) ) {
 
 				while (false !== ($file = readdir($handle))) {
 					if (is_file($path_dir . '/' . $file)) {
-						$new_file_name = substr($file, strpos($file, '_'));
-						rename ($path_dir .  '/' . $file, $path_dir .  '/' . $new_file_name);
+						// $new_file_name = substr($file,0 , strpos($file, '_'));
+						// rename ($path_dir .  '/' . $file, $path_dir .  '/' . $new_file_name);
 					}
 				}
 			}
