@@ -12,8 +12,25 @@ if ( !empty($_POST['section_name']) ) {
 	$old_section_name = $db->get_val('section_name', $id, 'default', 'html_content');
 
 	if ($new_section_name != $old_section_name) {
-		echo 'Trying to change the class of the wrapper!';
-		die();
+		$path = ROOT . '/templates/images/';
+		$path_arr = clean_dots_scandir($path);
+
+		if ( in_array($old_section_name, $path_arr) ) {
+			$path_dir = $path . $old_section_name;
+
+			if ( is_dir($path_dir) ) {
+				$handle = opendir($path_dir);
+
+				while (false !== ($file = readdir($handle))) {
+					if (is_file($path_dir . '/' . $file)) {
+						$new_file_name = substr($file, strpos($file, '_'));
+						rename ($path_dir .  '/' . $file, $path_dir .  '/' . $new_file_name);
+					}
+				}
+			}
+			
+			
+		}
 	}
 
 	// echo '$new_section_name - ' . $new_section_name . '<br>';
