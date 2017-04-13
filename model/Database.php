@@ -66,15 +66,18 @@ class Database
 
 
     
-    public function update_tablecell_value($POST_arr, $id) {
+    public function update_tablecell_value($POST_arr, $id)
+    {
         // получаем массив $tablesList с именами всех таблиц в нашей базе данных
         $tables_list_arr = $this->get_all_tablename_DB_arr();
 
     	foreach ($tables_list_arr as $table_name) {
 
             foreach ($POST_arr as $key => $value) {
+                // если попытка поменять класс секции, то пропускаем итерацию - для класса секции дополгительные проверки в обработчике
+                if ($key === 'section_name') continue;
 
-               if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=?")) {
+                if ($stmt = $this->db->prepare("SELECT $key FROM $table_name WHERE id=?")) {
 
                     $stmt->bind_param('s', $id);
                     $stmt->execute();
@@ -92,7 +95,12 @@ class Database
                 }
             }
     	}
-    } 
+    }
+
+    public function update_tablecell_value_single($val_name, $val, $id, $table_name)
+    {
+        mysqli_query($this->db, "UPDATE $table_name SET $val_name = '$val' WHERE id='$id'");
+    }
 
 
 

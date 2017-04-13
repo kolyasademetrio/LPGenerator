@@ -126,6 +126,8 @@ function create_array() {
 
 	global ${$arrayName};
 
+	${$arrayName}['global_arr_name'] = $arrayName;
+
 	${$arrayName}['id'] = array_shift($args);
 
 	if (is_array($args[0]) && $args[0] !== NULL) {
@@ -295,8 +297,6 @@ function include_files($dir_name) {
 									echo '</div>';
 								}
 
-								
-
 								// Выбрать блок ???????????????? не подключен но выведен в index.php
 								echo '<div class="block_changed">
 									  	  <label>Выбрать блок 
@@ -315,7 +315,7 @@ function include_files($dir_name) {
 								}
 
 								// input[class="id_hidden_wrap"]
-								include 'templates/html/modules-admin/id_hidden_wrap.php';
+								include 'templates/html/modules-admin/hidden_wrap.php';
 									 
 								// input[type="submit"]
 								include 'templates/html/modules-admin/submit_wrap.php';

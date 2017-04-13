@@ -1,61 +1,61 @@
-/* ------------------------>>> name <<<----------------------------------------------------- */
-.name {
-	padding: 50px 0 40px;
+/* ------------------------>>> block <<<----------------------------------------------------- */
+.block {
+	padding: 50px 0 100px;
 	background-color: #fff;
 }
 
-.name__title {
+.block__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
-	font-size: 25px;
+	font-size: 23px;
 	color: #565a65;
 
 	margin: 0 0 55px;
 }
 
-.name__container {
+.block__container {
 	max-width: 1006px;
 }
 
-.name__container,
-.name__innerItem {
+.block__container,
+.block__innerItem {
 	padding-left: 3px;
 	padding-right: 3px;
 }
 
-.name__row {
+.block__row {
 	margin-left: -3px;
 	margin-right: -3px;
 }
 
-.name__innerItem {
+.block__innerItem {
 	margin-bottom: 6px;
 }
 
-.name__item {
+.block__item {
 	background-color: #e0e0e0;
 	height: 56px;
 	line-height: 56px;
 }
 
-.name__img {
+.block__img {
 	display: inline-block;
 	vertical-align: middle;
 }
 
 @media ( max-width: 768px ) {
 
-	.name__container {
+	.block__container {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
 
-	.name {
+	.block {
 		padding: 30px 0 30px;
 	}
 
-	.name__title {
+	.block__title {
 		margin-bottom: 30px;
 		font-size: 20px;
 	}
@@ -63,4 +63,4 @@
 }
 
 
-/* ------------------------>>> name End <<<------------------------------------------------- */
+/* ------------------------>>> block End <<<------------------------------------------------- */
