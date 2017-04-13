@@ -29,55 +29,61 @@ if ( !empty($_POST['section_name']) ) {
 	if ( !is_dir($path_dir) ) mkdir($path_dir);
 
 	if ($new_section_name != $old_section_name) {
-		
-		if ( is_dir($path_dir) ) {
-			$handle = opendir($path_dir);
 
-			while (false !== ($file_name = readdir($handle))) {
+		$folders_arr = clean_dots_scandir($path);
 
-				if (is_file($path_dir . DIRSEP . $file_name)) {
+		if ( !in_array( $new_section_name, $folders_arr ) ) {
+			if ( is_dir($path_dir) ) {
+				$handle = opendir($path_dir);
 
-					$file = pathinfo($file_name);
+				while (false !== ($file_name = readdir($handle))) {
 
-					// расширение файла
-					$file_extension = $file['extension'];
+					if (is_file($path_dir . DIRSEP . $file_name)) {
 
-					$array_extension = array('jpeg', 'jpg', 'png');
+						$file = pathinfo($file_name);
 
-					if ( in_array($file_extension, $array_extension) ) {
+						// расширение файла
+						$file_extension = $file['extension'];
 
-						// полное имя файла с расширением
-						$file_basename = $file['basename'];
+						$array_extension = array('jpeg', 'jpg', 'png');
 
-						// имя файла без расширения и точки перед ним
-						$file_without_extension_less = basename($file_basename, '.' . $file_extension);
+						if ( in_array($file_extension, $array_extension) ) {
 
-						// позиция последнего нижнего подчёркивания в имени файла без расширения
-						$strripos = strripos($file_without_extension_less, '_');
+							// полное имя файла с расширением
+							$file_basename = $file['basename'];
 
-						// часть имени файла до последнего подчёркивания
-						// если имя файла partners_1, то $shortname = "partners"
-						$shortname = substr($file_without_extension_less, 0, $strripos);
+							// имя файла без расширения и точки перед ним
+							$file_without_extension_less = basename($file_basename, '.' . $file_extension);
 
-						// часть имени файла включает подчёркивание и цифру перед расширением
-						// если имя файла partners_1, то $number_of_file = "_1"
-						$number_of_file = substr($file_without_extension_less, $strripos);
+							// позиция последнего нижнего подчёркивания в имени файла без расширения
+							$strripos = strripos($file_without_extension_less, '_');
+
+							// часть имени файла до последнего подчёркивания
+							// если имя файла partners_1, то $shortname = "partners"
+							$shortname = substr($file_without_extension_less, 0, $strripos);
+
+							// часть имени файла включает подчёркивание и цифру перед расширением
+							// если имя файла partners_1, то $number_of_file = "_1"
+							$number_of_file = substr($file_without_extension_less, $strripos);
 
 
-						$new_file_name = $new_section_name . $number_of_file . '.' . $file_extension;
-						rename ($path_dir .  DIRSEP . $file_name, $path_dir .  DIRSEP . $new_file_name);
+							$new_file_name = $new_section_name . $number_of_file . '.' . $file_extension;
+							rename ($path_dir .  DIRSEP . $file_name, $path_dir .  DIRSEP . $new_file_name);
+						}
 					}
 				}
+				closedir($handle);
 			}
+			// переименовываем папку с картинками в которой переименовали все картинки
+			rename($path . $old_section_name, $path . $new_section_name);
+			$db = new Database();
+			$db->update_tablecell_value_single('section_name', $new_section_name, $id, 'html_content');
 
-			closedir($handle);
 		}
-
-		// переименовываем папку с картинками в которой переименовали все картинки
 		
-		rename($path . $old_section_name, $path . $new_section_name);
-		$db = new Database();
-		$db->update_tablecell_value_single('section_name', $new_section_name, $id, 'html_content');
+		
+
+		
 	}
 }
 
