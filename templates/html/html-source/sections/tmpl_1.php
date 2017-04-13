@@ -58,7 +58,7 @@ for ($i=1; $i <= $count_col; $i++) {
                 
 $html .=    '<div class="col-lg-' . $col_lg . ' col-md-' . $col_md . ' col-sm-' . $col_sm . ' col-xs-' . $col_xs_768 . ' col-479-' . $col_xs_479 . ' col-380-' . $col_xs_380 . ' ' . $section_name . '__innerItem">
                 <div class="' . $section_name . '__item text-center">
-                    <img src="img/' . $section_name . '/photos/' . $section_name . '_' . $i . '.jpg" alt="" class="' . $section_name . '__img">
+                    <img src="images/' . $section_name . '/photos/' . $section_name . '_' . $i . '.jpg" alt="" class="' . $section_name . '__img">
                 </div>
             </div>';
 

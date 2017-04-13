@@ -1,6 +1,6 @@
 /* ------------------------>>> services <<<----------------------------------------------------- */
 .services {
-	padding: 40px 0 35px;
+	padding: 40px 0 40px;
 	background: #fff url(../img/services/bg/bg_services.jpg) center 0 no-repeat;
 	background-size: cover;
 }
@@ -9,7 +9,7 @@
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
-	font-size: 40px;
+	font-size: 23px;
 	color: #565a65;
 
 	margin: 0 0 55px;

@@ -9,61 +9,74 @@ $POST_arr = $_POST;
 
 // сначала проверка и обработка класса секции - потом ниже загрузка картинки в переименованную папку
 if ( !empty($_POST['section_name']) ) {
-	$db = new Database();
-	$old_section_name = $db->get_val('section_name', $id, 'default', 'html_content');
+
+	$old_section_name = trim($_POST['global_arr_name']);
+	$old_section_name =${$old_section_name}['section_name'];
+
+
 	$new_section_name = trim($_POST['section_name']);
+
+
+	$path = ROOT . DIRSEP . 'images' . DIRSEP;
+
+	$path_dir = $path . $old_section_name . DIRSEP;
+
+
+	if ( !is_dir($path_dir) ) mkdir($path_dir);
+
+	$path_dir .= 'photos' . DIRSEP;
+
+	if ( !is_dir($path_dir) ) mkdir($path_dir);
 
 	if ($new_section_name != $old_section_name) {
 		
-		$path = ROOT . DIRSEP . 'templates' . DIRSEP . 'images' . DIRSEP;
-		$path_arr = clean_dots_scandir($path);
+		if ( is_dir($path_dir) ) {
+			$handle = opendir($path_dir);
 
-		if ( in_array($old_section_name, $path_arr) ) {
-			$path_dir = $path . $old_section_name;
+			while (false !== ($file_name = readdir($handle))) {
 
-			if ( is_dir($path_dir) ) {
-				$handle = opendir($path_dir);
+				if (is_file($path_dir . DIRSEP . $file_name)) {
 
-				while (false !== ($file_name = readdir($handle))) {
-					if (is_file($path_dir . DIRSEP . $file_name)) {
+					$file = pathinfo($file_name);
 
-						$file = pathinfo($file_name);
+					// расширение файла
+					$file_extension = $file['extension'];
 
-						// расширение файла
-						$file_extension = $file['extension'];
+					$array_extension = array('jpeg', 'jpg', 'png');
 
-						$array_extension = array('jpeg', 'jpg', 'png');
+					if ( in_array($file_extension, $array_extension) ) {
 
-						if ( in_array($file_extension, $array_extension) ) {
+						// полное имя файла с расширением
+						$file_basename = $file['basename'];
 
-							// полное имя файла с расширением
-							$file_basename = $file['basename'];
+						// имя файла без расширения и точки перед ним
+						$file_without_extension_less = basename($file_basename, '.' . $file_extension);
 
-							// имя файла без расширения и точки перед ним
-							$file_without_extension_less = basename($file_basename, '.' . $file_extension);
+						// позиция последнего нижнего подчёркивания в имени файла без расширения
+						$strripos = strripos($file_without_extension_less, '_');
 
-							// позиция последнего нижнего подчёркивания в имени файла без расширения
-							$strripos = strripos($file_without_extension_less, '_');
+						// часть имени файла до последнего подчёркивания
+						// если имя файла partners_1, то $shortname = "partners"
+						$shortname = substr($file_without_extension_less, 0, $strripos);
 
-							// часть имени файла до последнего подчёркивания
-							// если имя файла partners_1, то $shortname = "partners"
-							$shortname = substr($file_without_extension_less, 0, $strripos);
-
-							// часть имени файла включает подчёркивание и цифру перед расширением
-							// если имя файла partners_1, то $number_of_file = "_1"
-							$number_of_file = substr($file_without_extension_less, $strripos);
+						// часть имени файла включает подчёркивание и цифру перед расширением
+						// если имя файла partners_1, то $number_of_file = "_1"
+						$number_of_file = substr($file_without_extension_less, $strripos);
 
 
-							$new_file_name = $new_section_name . $number_of_file . '.' . $file_extension;
-							rename ($path_dir .  DIRSEP . $file_name, $path_dir .  DIRSEP . $new_file_name);
-						}
+						$new_file_name = $new_section_name . $number_of_file . '.' . $file_extension;
+						rename ($path_dir .  DIRSEP . $file_name, $path_dir .  DIRSEP . $new_file_name);
 					}
 				}
 			}
-			
+
+			closedir($handle);
 		}
+
 		// переименовываем папку с картинками в которой переименовали все картинки
-		rename($path_dir, $path . $new_section_name);
+		
+		rename($path . $old_section_name, $path . $new_section_name);
+		$db = new Database();
 		$db->update_tablecell_value_single('section_name', $new_section_name, $id, 'html_content');
 	}
 }
@@ -80,13 +93,35 @@ if (!empty($_FILES)) {
 	foreach ($_FILES as $files) {
 		if ($files['error'] == false) {
 
-			// $upload
+			if ( !empty($_POST['section_name']) ) {
+				$section_img_name = trim($_POST['section_name']);
+			} else {
+				$section_img_name = trim($_POST['global_arr_name']);
+				$section_img_name =${$section_img_name}['section_name'];
+			}
 
-			$uploaddir = ROOT . DIRSEP . 'templates' . DIRSEP . 'images' . DIRSEP . $POST_arr['sect_name'] . DIRSEP;
-
-			$filename = $POST_arr['sect_name'] . '_' . $i . '.' . get_extension($files['name']);
+			$uploaddir = ROOT . DIRSEP . 'images' . DIRSEP . $section_img_name . DIRSEP;
 
 			if ( !is_dir($uploaddir) ) mkdir($uploaddir);
+
+			$uploaddir .= 'photos' . DIRSEP;
+
+			if ( !is_dir($uploaddir) ) mkdir($uploaddir);
+
+			$upploaddir_files_arr = clean_dots_scandir($uploaddir);
+
+			foreach ($upploaddir_files_arr as $upploaddir_file_existing) {
+
+				$needle = '_' . $i . '.';
+				if ( strpos($upploaddir_file_existing, $needle) ) {
+
+					unlink($uploaddir . $upploaddir_file_existing);
+				}
+			}
+
+			$upload_file_extension = get_extension($files['name']);
+
+			$filename = $section_img_name . '_' . $i . '.' . get_extension($files['name']);
 
 			$uploadfile = $uploaddir . $filename;
 
