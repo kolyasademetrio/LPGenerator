@@ -10,21 +10,18 @@ $POST_arr = $_POST;
 // сначала проверка и обработка класса секции - потом ниже загрузка картинки в переименованную папку
 if ( !empty($_POST['section_name']) ) {
 
-	$old_section_name = trim($_POST['global_arr_name']);
-	$old_section_name =${$old_section_name}['section_name'];
+	$global_arr_name = trim($_POST['global_arr_name']);
+	$old_section_name = ${$global_arr_name}['section_name'];
 
 
 	$new_section_name = trim($_POST['section_name']);
 
 
-	$path = ROOT . DIRSEP . 'images' . DIRSEP;
+	$path = ROOT . DIRSEP . 'images' . DIRSEP . 'section_' . trim($_POST['id']) . DIRSEP;
 
-	$path_dir = $path . $old_section_name . DIRSEP;
+	if ( !is_dir($path) ) mkdir($path);
 
-
-	if ( !is_dir($path_dir) ) mkdir($path_dir);
-
-	$path_dir .= 'photos' . DIRSEP;
+	$path_dir = $path . 'photos' . DIRSEP;
 
 	if ( !is_dir($path_dir) ) mkdir($path_dir);
 
@@ -75,7 +72,7 @@ if ( !empty($_POST['section_name']) ) {
 				closedir($handle);
 			}
 			// переименовываем папку с картинками в которой переименовали все картинки
-			rename($path . $old_section_name, $path . $new_section_name);
+			// rename($path . $old_section_name, $path . $new_section_name);
 			$db = new Database();
 			$db->update_tablecell_value_single('section_name', $new_section_name, $id, 'html_content');
 
@@ -90,10 +87,6 @@ if ( !empty($_POST['section_name']) ) {
 
 
 if (!empty($_FILES)) {
-	// echo '<pre>';
-	// var_dump($_POST);
-	// echo '</pre>';
-	// myvardump($_FILES);
 
 	$i = 1;
 	foreach ($_FILES as $files) {
@@ -106,7 +99,7 @@ if (!empty($_FILES)) {
 				$section_img_name =${$section_img_name}['section_name'];
 			}
 
-			$uploaddir = ROOT . DIRSEP . 'images' . DIRSEP . $section_img_name . DIRSEP;
+			$uploaddir = ROOT . DIRSEP . 'images' . DIRSEP . 'section_' . trim($_POST['id']) . DIRSEP;
 
 			if ( !is_dir($uploaddir) ) mkdir($uploaddir);
 
@@ -116,18 +109,22 @@ if (!empty($_FILES)) {
 
 			$upploaddir_files_arr = clean_dots_scandir($uploaddir);
 
-			foreach ($upploaddir_files_arr as $upploaddir_file_existing) {
+			if (!empty($upploaddir_files_arr)) {
 
-				$needle = '_' . $i . '.';
-				if ( strpos($upploaddir_file_existing, $needle) ) {
+				foreach ($upploaddir_files_arr as $upploaddir_file_existing) {
 
-					unlink($uploaddir . $upploaddir_file_existing);
+					$needle = '_' . $i . '.';
+					if ( strpos($upploaddir_file_existing, $needle) ) {
+
+						unlink($uploaddir . $upploaddir_file_existing);
+					}
 				}
+
 			}
 
 			$upload_file_extension = get_extension($files['name']);
 
-			$filename = $section_img_name . '_' . $i . '.' . get_extension($files['name']);
+			$filename = $section_img_name . '_' . $i . '.' . $upload_file_extension;
 
 			$uploadfile = $uploaddir . $filename;
 

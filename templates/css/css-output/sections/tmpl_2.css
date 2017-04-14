@@ -1,40 +1,40 @@
-/* ------------------------>>> services <<<----------------------------------------------------- */
-.services {
-	padding: 40px 0 40px;
-	background: #fff url(../img/services/bg/bg_services.jpg) center 0 no-repeat;
+/* ------------------------>>> first <<<----------------------------------------------------- */
+.first {
+	padding: 40px 0 35px;
+	background: #fff url(../img/first/bg/bg_first.jpg) center 0 no-repeat;
 	background-size: cover;
 }
 
-.services__title {
+.first__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
-	font-size: 23px;
+	font-size: 40px;
 	color: #565a65;
 
 	margin: 0 0 55px;
 }
 
-.services__container {
+.first__container {
 	max-width: 1012px;
 }
 
-.services__container,
-.services__innerItem {
+.first__container,
+.first__innerItem {
 	padding-left: 6px;
 	padding-right: 6px;
 }
 
-.services__row {
+.first__row {
 	margin-left: 6px;
 	margin-right: 6px;
 }
 
-.services__innerItem {
+.first__innerItem {
 	margin-bottom: 40px;
 }
 
-.services__item {
+.first__item {
 	border: 3px solid transparent;
 	-webkit-transition: all .6s ease 0s;
 	-moz-transition: all .6s ease 0s;
@@ -42,16 +42,16 @@
 	transition: all .6s ease 0s;
 }
 
-.services__header {
+.first__header {
 	margin-bottom: 25px;
 }
 
-.services__img {
+.first__img {
 	width: 100%;
 	height: auto;
 }
 
-.services__footer {
+.first__footer {
 	font-family: "RobotoRegular";
 	font-style: normal;
 	font-weight: normal;
@@ -59,12 +59,12 @@
 	color: #fff;
 }
 
-.services__innerItem:nth-child(1) .services__footer,
-.services__innerItem:nth-child(2) .services__footer {
+.first__innerItem:nth-child(1) .first__footer,
+.first__innerItem:nth-child(2) .first__footer {
 	color: #313131;
 }
 
-.services__subtitle {
+.first__subtitle {
 	font-family: "RobotoRegular";
 	font-style: normal;
 	font-weight: normal;
@@ -74,7 +74,7 @@
 	margin: 0 0 40px;
 }
 
-.services__orderBtn {
+.first__orderBtn {
 	display: inline-block;
 	height: 50px;
 	width: 210px;
@@ -93,18 +93,18 @@
 	border-radius: 2px;
 }
 
-.services__orderBtn:hover {
+.first__orderBtn:hover {
 	text-decoration: underline;
 	color: #fff;
 }
 
-.services__orderBtn:focus {
+.first__orderBtn:focus {
 	color: #fff;
 }
 
 @media ( min-width: 992px ) {
 
-	.services__innerItem:nth-child(4n+1) {
+	.first__innerItem:nth-child(4n+1) {
 		clear: both;
 	}
 
@@ -112,7 +112,7 @@
 
 @media ( max-width: 992px ) and ( min-width: 768px ) {
 
-	.services__innerItem:nth-child(4n+1) {
+	.first__innerItem:nth-child(4n+1) {
 		clear: both;
 	}
 
@@ -120,7 +120,7 @@
 
 @media ( max-width: 767px ) and ( min-width: 479px ) {
 
-	.services__innerItem:nth-child(2n+1) {
+	.first__innerItem:nth-child(2n+1) {
 		clear: both;
 	}
 
@@ -128,7 +128,7 @@
 
 @media ( max-width: 992px ) {
 
-	.services__footer {
+	.first__footer {
 		color: #313131 !important;
 	}
 
@@ -136,11 +136,11 @@
 
 @media ( max-width: 768px ) {
 
-	.services {
+	.first {
 		padding-top: 30px;
 	}
 
-	.services__title {
+	.first__title {
 		font-size: 20px;
 
 		margin: 0 0 30px;
@@ -148,4 +148,4 @@
 
 }
 
-/* ------------------------>>> services End <<<------------------------------------------------- */
+/* ------------------------>>> first End <<<------------------------------------------------- */

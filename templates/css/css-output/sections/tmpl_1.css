@@ -1,61 +1,61 @@
-/* ------------------------>>> partners <<<----------------------------------------------------- */
-.partners {
-	padding: 50px 0 40px;
+/* ------------------------>>> first <<<----------------------------------------------------- */
+.first {
+	padding: 50px 0 100px;
 	background-color: #fff;
 }
 
-.partners__title {
+.first__title {
 	font-family: "RobotoLight";
 	font-style: normal;
 	font-weight: normal;
-	font-size: 25px;
+	font-size: 23px;
 	color: #565a65;
 
 	margin: 0 0 55px;
 }
 
-.partners__container {
+.first__container {
 	max-width: 1006px;
 }
 
-.partners__container,
-.partners__innerItem {
+.first__container,
+.first__innerItem {
 	padding-left: 3px;
 	padding-right: 3px;
 }
 
-.partners__row {
+.first__row {
 	margin-left: -3px;
 	margin-right: -3px;
 }
 
-.partners__innerItem {
+.first__innerItem {
 	margin-bottom: 6px;
 }
 
-.partners__item {
+.first__item {
 	background-color: #e0e0e0;
 	height: 56px;
 	line-height: 56px;
 }
 
-.partners__img {
+.first__img {
 	display: inline-block;
 	vertical-align: middle;
 }
 
 @media ( max-width: 768px ) {
 
-	.partners__container {
+	.first__container {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
 
-	.partners {
+	.first {
 		padding: 30px 0 30px;
 	}
 
-	.partners__title {
+	.first__title {
 		margin-bottom: 30px;
 		font-size: 20px;
 	}
@@ -63,4 +63,4 @@
 }
 
 
-/* ------------------------>>> partners End <<<------------------------------------------------- */
+/* ------------------------>>> first End <<<------------------------------------------------- */
