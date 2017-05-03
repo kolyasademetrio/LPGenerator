@@ -5,10 +5,10 @@ include_once 'functions.php';
 $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
-die();
+// echo '<pre>';
+// var_dump($_POST);
+// echo '</pre>';
+// die();
 
 
 

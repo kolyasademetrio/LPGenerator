@@ -247,8 +247,8 @@ function include_files($dir_name) {
 		$file_path = ROOT . DIRSEP . $dir_name . DIRSEP . $file_name;
 
 		if ( file_exists($file_path) ) {
-			$attrNameID = 'tmpl_selected_' . $id;
-			if ( in_array($attrNameID, $_POST) || isset($_POST['show_all_templates']) ) {
+			$attrNameID = 'tmpl_' . $id;
+			if ( array_key_exists($attrNameID, $_POST) || isset($_POST['show_all_templates']) || empty($_POST) ) {
 				echo '<section class="section_' . $id . ' section">';
 				echo '<a href="" class="up">Вверх</a><a href="" class="down">Вниз</a>';
 				include $file_path;// вывод скомпилированного .html
@@ -306,7 +306,7 @@ function include_files($dir_name) {
 
 									// Выбрать блок ???????????????? не подключен но выведен в index.php
 									echo '<div class="block_selected_wrap">
-										  	  <span for="tmpl_selected_' . $id . '" class="block_selected_label">Выбрать блок</span><input type="checkbox" name="block_selected" value="selected" class="block_selected_checkbox">
+										  	  <span for="section_' . $id . '" class="block_selected_label">Выбрать блок</span><input type="checkbox" name="block_selected" value="selected" class="block_selected_checkbox">
 										   </div><!-- .block_changed -->';
 
 									// Количество блоков
@@ -386,15 +386,15 @@ function include_form_blocks_selected($dir_name){
 	echo '<form method="post" name="form_block_selected">';
 	for ($c = 1; $c <= count($files); $c++) {
 		if ( ! isset($_POST['show_all_templates']) ) {
-			$attrName = 'tmpl_selected_' . $c;
-			if ( in_array($attrName, $_POST) ) {
-				echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '" checked>';
+			$attrName = 'tmpl_' . $c;
+			if ( array_key_exists($attrName, $_POST) ) {
+				echo '<input type="checkbox" name="tmpl_' . $c . '" value="' . $c . '" id="section_' . $c . '" checked>';
 			} else {
-				echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '">';
+				echo '<input type="checkbox" name="tmpl_' . $c . '" value="' . $c . '" id="section_' . $c . '">';
 			}
 
 		} else {
-			echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '">';
+			echo '<input type="checkbox" name="tmpl_' . $c . '" value="' . $c . '" id="section_' . $c . '">';
 		}
 
 		

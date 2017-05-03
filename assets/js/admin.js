@@ -9,6 +9,9 @@ $(document).ready(function(){
         $('section.section').each(function(index){
         	var sect_index = ++index;
         	$(this).attr('index', sect_index);
+        	var firstClass = $(this).attr('class').replace(/^(\S*).*/, '$1');
+        	$('#' + firstClass).val(sect_index);
+        	
         });
 
         return false
@@ -20,6 +23,8 @@ $(document).ready(function(){
         $('section.section').each(function(index){
         	var sect_index = ++index;
         	$(this).attr('index', sect_index);
+        	var firstClass = $(this).attr('class').replace(/^(\S*).*/, '$1');
+        	$('#' + firstClass).val(sect_index);
         });
 
         return false
