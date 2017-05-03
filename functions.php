@@ -240,96 +240,103 @@ function include_files($dir_name) {
 
 		global ${$global_arr};
 
+		// echo '<pre>';
+		// echo(${$global_arr}['id']);
+		// echo '</pre>';
+
 		$file_path = ROOT . DIRSEP . $dir_name . DIRSEP . $file_name;
 
 		if ( file_exists($file_path) ) {
-			// echo '<form name="block_edit_' . $id . '" method="post" action="handler.php" enctype="multipart/form-data">';
-			include $file_path;// вывод скомпилированного .html
-			?>
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form__wrapper admin">
-							<?php
-							// .section_name_form первоначально скрытая отдельная форма с полем для изменения
-							// класса основного контейнера секции
-							// include 'templates/html/modules-admin/section_name_form.php';
-							?>
-							<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
-								<div class="inputs__wraper">
+			$attrNameID = 'tmpl_selected_' . $id;
+			if ( in_array($attrNameID, $_POST) || isset($_POST['show_all_templates']) ) {
+				echo '<section class="section_' . $id . ' section">';
+				echo '<a href="" class="up">Вверх</a><a href="" class="down">Вниз</a>';
+				include $file_path;// вывод скомпилированного .html
+				?>
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form__wrapper admin">
 								<?php
-								// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
-								if (isset(${$global_arr}['count_col']) && ${$global_arr}['if_col_has_img_to_download'] === true) {
-									include 'templates/html/modules-admin/inputs_type_file.php';
-								}
-
-								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне кроме полей для ЗАГОЛОВКА
-								// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
-								// если первый символ в $key это $, то выводим input[type="text"] и
-								// если в начале ключа массива есть '$title', то пропускаем эти ключи(выводим их позже в отдельный блок для всего что касается Заголовка)
-								foreach (${$global_arr} as $key => $value) {
-									if (strpos($key, '$') === 0) {
-										if (strpos($key, '$title') === 0) continue;
-										echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+								// .section_name_form первоначально скрытая отдельная форма с полем для изменения
+								// класса основного контейнера секции
+								// include 'templates/html/modules-admin/section_name_form.php';
+								?>
+								<form name="block_edit_<?php echo $id; ?>" method="post" action="handler.php" enctype="multipart/form-data">
+									<div class="inputs__wraper">
+									<?php
+									// вывод input[type="file"] в колличестве колонок Bootstrap данного блока
+									if (isset(${$global_arr}['count_col']) && ${$global_arr}['if_col_has_img_to_download'] === true) {
+										include 'templates/html/modules-admin/inputs_type_file.php';
 									}
-								}
 
-								// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне для ЗАГОЛОВКА
-								// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
-								// если первый символ в $key это $, то выводим input[type="text"] и 
-								// если в начале ключа массива есть '$title', то выводим input[type="text"] для этих ключей
-								if (isset(${$global_arr}['$title'])) {
-									echo '<div class=title-edit-wrap>';
+									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне кроме полей для ЗАГОЛОВКА
+									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
+									// если первый символ в $key это $, то выводим input[type="text"] и
+									// если в начале ключа массива есть '$title', то пропускаем эти ключи(выводим их позже в отдельный блок для всего что касается Заголовка)
 									foreach (${$global_arr} as $key => $value) {
-										if (strpos($key, '$title') === 0) {
+										if (strpos($key, '$') === 0) {
+											if (strpos($key, '$title') === 0) continue;
 											echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
 										}
 									}
 
-									// Положение заголовка блока
-									include 'templates/html/modules-admin/title_text_center.php';
+									// вывод input[type="text"] в колличестве всех подключенных полей в шаблоне для ЗАГОЛОВКА
+									// поля в шаблоне добавляются в глобальный массив '$tmpl_' . $id
+									// если первый символ в $key это $, то выводим input[type="text"] и 
+									// если в начале ключа массива есть '$title', то выводим input[type="text"] для этих ключей
+									if (isset(${$global_arr}['$title'])) {
+										echo '<div class=title-edit-wrap>';
+										foreach (${$global_arr} as $key => $value) {
+											if (strpos($key, '$title') === 0) {
+												echo '<input type="text" name="' . $value . '" placeholder="' . $value . '">';
+											}
+										}
 
-									// Заглавные/прописные буквы заголовка блока
-									include 'templates/html/modules-admin/title_text_uppercase.php';
+										// Положение заголовка блока
+										include 'templates/html/modules-admin/title_text_center.php';
 
-									
+										// Заглавные/прописные буквы заголовка блока
+										include 'templates/html/modules-admin/title_text_uppercase.php';
 
-									echo '</div>';
-								}
+										
 
-								// Выбрать блок ???????????????? не подключен но выведен в index.php
-								echo '<div class="block_changed">
-									  	  <label>Выбрать блок 
-									  	  		<input type="checkbox" name="block_selected" value="selected" checked>
-									  	   </label>
-									   </div><!-- .block_changed -->';
+										echo '</div>';
+									}
 
-								// Количество блоков
-								if (isset(${$global_arr}['count_col'])) {
-									include 'templates/html/modules-admin/bootstrap_col_qty.php';
-								}
+									// Выбрать блок ???????????????? не подключен но выведен в index.php
+									echo '<div class="block_selected_wrap">
+										  	  <span for="tmpl_selected_' . $id . '" class="block_selected_label">Выбрать блок</span><input type="checkbox" name="block_selected" value="selected" class="block_selected_checkbox">
+										   </div><!-- .block_changed -->';
 
-								// Кол-во колонок для разрешения
-								if (isset(${$global_arr}['count_col'])) {
-									include 'templates/html/modules-admin/bootstrap_classes.php';
-								}
+									// Количество блоков
+									if (isset(${$global_arr}['count_col'])) {
+										include 'templates/html/modules-admin/bootstrap_col_qty.php';
+									}
 
-								// input[class="id_hidden_wrap"]
-								include 'templates/html/modules-admin/hidden_wrap.php';
-									 
-								// input[type="submit"]
-								include 'templates/html/modules-admin/submit_wrap.php';
-								?>
+									// Кол-во колонок для разрешения
+									if (isset(${$global_arr}['count_col'])) {
+										include 'templates/html/modules-admin/bootstrap_classes.php';
+									}
 
-				
-								</div><!-- inputs__wraper -->
-							</form>
-						</div><!-- form__wrapper -->
-					</div><!-- col-xs-12 -->
-				</div><!-- row -->
-			</div><!-- container -->
+									// input[class="id_hidden_wrap"]
+									include 'templates/html/modules-admin/hidden_wrap.php';
+										 
+									// input[type="submit"]
+									include 'templates/html/modules-admin/submit_wrap.php';
+									?>
 
-			<?php
+					
+									</div><!-- inputs__wraper -->
+								</form>
+							</div><!-- form__wrapper -->
+						</div><!-- col-xs-12 -->
+					</div><!-- row -->
+				</div><!-- container -->
+
+				<?php
+				echo '</section><!-- section.section End -->';
+				}
 			$id++;
 		}
 	}
@@ -368,6 +375,32 @@ function include_form($arr) {
 				</div><!-- row -->
 			</div><!-- container -->
 <?php
+}
+
+/**
+ * Выводим форму Сфомировать макет
+ * @param  string $dir_name путь к паке с сгенерированными шаблонами html-блоков
+ */
+function include_form_blocks_selected($dir_name){
+	$files = clean_dots_scandir($dir_name);
+	echo '<form method="post" name="form_block_selected">';
+	for ($c = 1; $c <= count($files); $c++) {
+		if ( ! isset($_POST['show_all_templates']) ) {
+			$attrName = 'tmpl_selected_' . $c;
+			if ( in_array($attrName, $_POST) ) {
+				echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '" checked>';
+			} else {
+				echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '">';
+			}
+
+		} else {
+			echo '<input type="checkbox" name="tmpl_selected_' . $c . '" value="tmpl_selected_' . $c . '" id="tmpl_selected_' . $c . '">';
+		}
+
+		
+	}
+	echo '<button type="submit" value="" name=create_pre_layout>Сформировать предварительный макет</button>';
+	echo '<button type="submit" value="true" name="show_all_templates">Показать все шаблоны</button></form>';
 }
 
 

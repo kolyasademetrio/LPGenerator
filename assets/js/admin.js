@@ -1,5 +1,31 @@
 $(document).ready(function(){
 
+	// перемещение контейнеров с шаблоном вверх/вниз
+    $(".up").click(function(){
+        var psect = $(this).parent('section');
+        psect.insertBefore(psect.prev());
+
+
+        $('section.section').each(function(index){
+        	var sect_index = ++index;
+        	$(this).attr('index', sect_index);
+        });
+
+        return false
+    });
+    $(".down").click(function(){
+        var psect = $(this).parent('section');
+        psect.insertAfter(psect.next());
+
+        $('section.section').each(function(index){
+        	var sect_index = ++index;
+        	$(this).attr('index', sect_index);
+        });
+
+        return false
+    });
+
+
 	// добавляет тег label для открытие окна выбора файла по клику на картинке
 	$('.container').each(function(){
 		var className = $(this).parent().attr('class');
@@ -26,6 +52,16 @@ $(document).ready(function(){
 		}
 	});
 
+	// по клику на надпись и input[type="checkbox"] делаем клик на input[type="checkbox"] в форме которая формирует страницу
+	$('.block_selected_label').on('click', function(){
+		var forAttrValue = $(this).attr('for');
+		$(this).next('.block_selected_checkbox').click();
+	});
+
+	$('.block_selected_checkbox').on('click', function(){
+		var forAttrValue = $(this).siblings('span').attr('for');
+		$('#' + forAttrValue).click();
+	});
 
 
 	// скрыть-показать поле input[type="text"][name="section_name"]

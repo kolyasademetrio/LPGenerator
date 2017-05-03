@@ -5,6 +5,11 @@ include_once 'functions.php';
 $id = trim($_POST['id']);
 
 $POST_arr = $_POST;
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
+die();
+
 
 
 // сначала проверка и обработка класса секции - потом ниже загрузка картинки в переименованную папку

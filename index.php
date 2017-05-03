@@ -1,12 +1,15 @@
 <?php
 include 'header.php';
 
-// myvardump($tmpl_1);
+ 
 
+include_form_blocks_selected('templates/html/html-output/sections');
 
 include_form($tmpl_common_css);
 
+echo '<div class="main_wrapper">';
 include_files('templates/html/html-output/sections');
+echo '</div><!-- .main_wrapper -->';
 
 
 
